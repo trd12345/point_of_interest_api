@@ -39,7 +39,8 @@ export default async function RegisterController(req: Request, res: Response) {
         }
 
         return res.status(500).json({
-            error: "Something went wrong",
+            error: error
+            //error: "Something went wrong",
         });
     }
 }
