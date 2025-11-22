@@ -11,6 +11,6 @@ export default defineConfig({
     },
     engine: "classic",
     datasource: {
-        url: env("MONGODB_URI"),
+        url: env("DATABASE_URL"),
     },
 });
