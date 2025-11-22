@@ -16,6 +16,7 @@ export class RegisterService {
     }) {
         try {
             const hashedPassword = await bcrypt.hash(data.password, 10);
+            const isLocal = process.env.APP_ENV === "local";
 
             const user = await this.db.user.create({
                 data: {
@@ -40,15 +41,18 @@ export class RegisterService {
 
             const verificationUrl = `${process.env.APP_URL}/auth/verify-email?token=${verificationToken}`;
 
-            await sendMail(
-                user.email,
-                "Verify your email",
-                `
+            if(isLocal){
+                await sendMail(
+                    user.email,
+                    "Verify your email",
+                    `
                     <p>Hello ${user.profile?.first_name},</p>
                     <p>Please verify your email by clicking the link below:</p>
                     <p><a href="${verificationUrl}">Verify Email</a></p>
                   `
-            );
+                );
+            }
+
 
             return user;
 
