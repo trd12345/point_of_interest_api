@@ -17,7 +17,7 @@ export async function ForgotPasswordController(req: Request, res: Response) {
             });
         }
         // 3. Call forgot password service
-        const result = container.forgotPasswordService.forgotPassword(req.body)
+        await container.forgotPasswordService.forgotPassword(req.body)
         // 4. Return response
         return res.json({message: "Check your email for reset link."});
     } catch (error: any) {

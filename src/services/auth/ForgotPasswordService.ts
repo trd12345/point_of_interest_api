@@ -9,9 +9,13 @@ export class ForgotPasswordService {
     }
 
     async forgotPassword(data: {email: string}) {
-        const user = await this.db.user.findUnique({where: {email: data.email}, include: {profile: true}});
-
-        if (!user) throw new Error("USER_NOT_FOUND");
+        const user = await this.db.user.findFirst({
+            where: {email: data.email},
+            include: {profile: true}
+        });
+        if (!user) {
+            throw new Error("USER_NOT_FOUND");
+        }
 
         // this variable will save the hash token after generated in passwordToken function in jwt (hash user id and email)
         const passwordResetToken = passwordToken({userId: user.id, email: user.email})
@@ -33,7 +37,17 @@ export class ForgotPasswordService {
 
         // create a new password reset record in the database
         try {
-            await this.db.passwordReset.create({data: {userId: user.id, token: passwordResetToken}});
+            await this.db.$transaction([
+                this.db.passwordReset.deleteMany({
+                    where: { userId: user.id },
+                }),
+                this.db.passwordReset.create({
+                    data: {
+                        userId: user.id,
+                        token: passwordResetToken,
+                    },
+                }),
+            ]);
         } catch (error: any) {
             // if it has db issues, server error
             throw new Error("SERVER_ERROR");
