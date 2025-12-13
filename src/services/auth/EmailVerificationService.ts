@@ -5,6 +5,7 @@ export class EmailVerificationService {
     constructor(private db: PrismaClient) {
     }
 
+    // As I understand here, it has verification token for the email link itself
     generateVerificationToken(userId: string, email: string) {
         return jwt.sign(
             {id: userId, email},

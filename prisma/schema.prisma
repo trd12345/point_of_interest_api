@@ -23,8 +23,9 @@ model User {
   created_at        DateTime  @default(now())
   updated_at        DateTime  @updatedAt
 
-  profile      Profile?
-  RefreshToken RefreshToken[]
+  profile       Profile?
+  RefreshToken  RefreshToken[]
+  PasswordReset PasswordReset[]
 }
 
 model Profile {
@@ -35,7 +36,7 @@ model Profile {
   updated_at DateTime @updatedAt
 
   user   User   @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId @unique
+  userId String @unique @db.ObjectId
 }
 
 model RefreshToken {
@@ -48,4 +49,12 @@ model RefreshToken {
   expiresAt DateTime
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model PasswordReset {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String   @unique
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @db.ObjectId
 }
