@@ -26,6 +26,10 @@ export function generateRefreshToken(payload: any) {
     return jwt.sign(payload, refreshSecret, {expiresIn: refreshExpires});
 }
 
+export function passwordToken(payload: {userId: string, email: string}) {
+    return jwt.sign(payload, refreshSecret, {expiresIn: refreshExpires});
+}
+
 export function refreshAccessToken(payload: JwtPayload) {
     const options: SignOptions = {
         expiresIn: (process.env.JWT_ACCESS_EXPIRES_IN as "15m") || "15m",
