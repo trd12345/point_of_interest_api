@@ -8,8 +8,8 @@ export class ForgotPasswordService {
     constructor(private db: PrismaClient) {
     }
 
-    async forgotPassword(email: string) {
-        const user = await this.db.user.findUnique({where: {email}, include: {profile: true}});
+    async forgotPassword(data: {email: string}) {
+        const user = await this.db.user.findUnique({where: {email: data.email}, include: {profile: true}});
 
         if (!user) throw new Error("USER_NOT_FOUND");
 
