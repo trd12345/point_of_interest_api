@@ -11,6 +11,7 @@ import { ForgotPasswordController } from "./controllers/auth/ForgotPasswordContr
 import ResetPasswordController from "./controllers/auth/ResetPasswordController";
 import { CategoryController } from "./controllers/CategoryController";
 import { PlacemarkController } from "./controllers/PlacemarkController";
+import { ChangePasswordController } from "./controllers/auth/ChangePasswordController";
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.get("/auth/verify-email", VerifyEmailController);
 router.post("/auth/refresh", AuthMiddleware, RefreshTokenController);
 router.post("/auth/forgot-password", AuthLimiter, ForgotPasswordController);
 router.post("/auth/reset-password", AuthLimiter, ResetPasswordController);
+router.post("/auth/change-password", AuthMiddleware, ChangePasswordController);
 
 // Category Routes - Manage classification of spots
 router.get("/categories", CategoryController.getAll);

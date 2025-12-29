@@ -9,6 +9,7 @@ import { ForgotPasswordService } from "../services/auth/ForgotPasswordService";
 import { ResetPasswordService } from "../services/auth/ResetPasswordService";
 import { CategoryService } from "../services/CategoryService";
 import { PlacemarkService } from "../services/PlacemarkService";
+import { ChangePasswordService } from "../services/auth/ChangePasswordService";
 
 class Container {
     prisma = new PrismaClient();
@@ -23,6 +24,7 @@ class Container {
     resetPasswordService = new ResetPasswordService(this.prisma);
     categoryService = new CategoryService(this.prisma);
     placemarkService = new PlacemarkService(this.prisma);
+    changePasswordService = new ChangePasswordService(this.prisma);
 }
 
 export const container = new Container();
