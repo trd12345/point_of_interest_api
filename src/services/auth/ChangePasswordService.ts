@@ -32,10 +32,8 @@ export class ChangePasswordService {
             data: { password: hashedPassword }
         });
 
-        // 4. Revoke sessions?
-        // Usually good practice to revoke other sessions, but maybe keep current one?
-        // For strict security, let's revoke all tokens (except maybe the current jti if we had it, but simple is all).
-        // Let's revoke all for now to force re-login on all devices (safest).
+        // 4. Revoke sessions
+        // Revoke all for now to force re-login on all devices
         await this.db.refreshToken.deleteMany({
             where: { userId: userId }
         });
