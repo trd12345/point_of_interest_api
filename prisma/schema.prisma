@@ -27,6 +27,7 @@ model User {
   profile       Profile?
   RefreshToken  RefreshToken[]
   PasswordReset PasswordReset[]
+  Placemark     Placemark[]
 }
 
 model Profile {
@@ -58,4 +59,42 @@ model PasswordReset {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   userId    String   @db.ObjectId
+}
+
+// Represents a classification for camping spots (e.g., Garden, Driveway).
+model Category {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  Placemark   Placemark[]
+}
+
+// Represents a physical camping listing hosted by a user.
+model Placemark {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  
+  // Physical address of the camping spot
+  address     String
+  
+  // Geographical coordinates for map placement
+  lat         Float
+  lng         Float
+  
+  // Analytics metric: number of times this listing has been viewed
+  view_count  Int      @default(0)
+  
+  // Visibility control: true if the listing is visible to search
+  is_public   Boolean  @default(true)
+  
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @db.ObjectId
 }

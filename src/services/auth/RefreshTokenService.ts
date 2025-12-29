@@ -1,4 +1,4 @@
-import {PrismaClient} from "../../../generated/prisma/client";
+ import {PrismaClient} from "../../../generated/prisma/client";
 import jwt from "jsonwebtoken";
 import {refreshAccessToken, refreshRefreshToken} from "../../lib/jwt";
 

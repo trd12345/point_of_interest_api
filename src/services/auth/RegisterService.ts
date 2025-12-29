@@ -1,8 +1,8 @@
-import {PrismaClient} from "../../../generated/prisma/client";
+import { PrismaClient } from "../../../generated/prisma/client";
 import bcrypt from "bcrypt";
-import {normalizeEmail, toTitleCase} from "../../utils/string";
-import {container} from "../../lib/container";
-import {sendMail} from "../../lib/mailer";
+import { normalizeEmail, toTitleCase } from "../../utils/string";
+import { container } from "../../lib/container";
+import { sendMail } from "../../lib/mailer";
 
 export class RegisterService {
     constructor(private db: PrismaClient) {
@@ -28,10 +28,13 @@ export class RegisterService {
                             last_name: toTitleCase(data.last_name),
                         },
                     },
+                    role: "USER", // Default role
                 },
-                include: {profile: true},
-                omit: {password: true},
+                include: { profile: true },
+                // omit: { password: true }, // Commenting out omit to allow strictly typed include, will delete password manually
             });
+
+            delete (user as any).password;
 
             const verificationToken =
                 container.emailVerificationService.generateVerificationToken(
@@ -41,17 +44,15 @@ export class RegisterService {
 
             const verificationUrl = `${process.env.APP_URL}/auth/verify-email?token=${verificationToken}`;
 
-            if(isLocal){
-                await sendMail(
-                    user.email,
-                    "Verify your email",
-                    `
-                    <p>Hello ${user.profile?.first_name},</p>
-                    <p>Please verify your email by clicking the link below:</p>
-                    <p><a href="${verificationUrl}">Verify Email</a></p>
-                  `
-                );
-            }
+            await sendMail(
+                user.email,
+                "Verify your email",
+                `
+                <p>Hello ${user.profile?.first_name},</p>
+                <p>Please verify your email by clicking the link below:</p>
+                <p><a href="${verificationUrl}">Verify Email</a></p>
+                `
+            );
 
 
             return user;

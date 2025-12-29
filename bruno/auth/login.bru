@@ -4,8 +4,8 @@ meta {
   seq: 1
 }
 
-get {
-  url: 127.0.0.1:3000/login
+post {
+  url: http://localhost:3000/auth/login
   body: json
   auth: inherit
 }

@@ -1,0 +1,22 @@
+meta {
+  name: create placemark
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/placemarks
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "My Quiet Garden",
+    "description": "A peaceful spot for one tent.",
+    "address": "123 Green Lane, Woodland",
+    "lat": 53.123,
+    "lng": -9.456,
+    "categoryId": "PASTE_CATEGORY_ID_HERE"
+  }
+}

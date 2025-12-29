@@ -1,0 +1,18 @@
+meta {
+  name: create category
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/categories
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Garden",
+    "description": "Lovely green space"
+  }
+}
