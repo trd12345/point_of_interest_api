@@ -1,0 +1,11 @@
+meta {
+  name: delete account
+  type: http
+  seq: 2
+}
+
+delete {
+  url: http://localhost:3000/auth/me
+  body: none
+  auth: inherit
+}

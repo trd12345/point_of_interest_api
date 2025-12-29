@@ -1,0 +1,18 @@
+meta {
+  name: update profile
+  type: http
+  seq: 1
+}
+
+put {
+  url: http://localhost:3000/auth/me
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "firstName": "New",
+    "lastName": "Name"
+  }
+}

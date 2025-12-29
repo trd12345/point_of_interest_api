@@ -1,7 +1,7 @@
 import { Router } from "express";
 import RegisterController from "./controllers/auth/RegisterController";
 import LoginController from "./controllers/auth/LoginController";
-import MeController from "./controllers/auth/MeController";
+import { MeController } from "./controllers/auth/MeController";
 import { AuthMiddleware } from "./middleware/authMiddleware";
 import { AuthLimiter } from "./middleware/rateLimiter";
 import VerifyEmailController from "./controllers/auth/VerifyEmailController";
@@ -18,7 +18,11 @@ const router = Router();
 router.post("/auth/login", AuthLimiter, LoginController);
 router.post("/auth/logout", AuthMiddleware, LogoutController);
 router.post("/auth/register", AuthLimiter, RegisterController);
-router.get("/me", AuthMiddleware, MeController);
+
+// User Profile Routes
+router.get("/auth/me", AuthMiddleware, MeController.get);
+router.put("/auth/me", AuthMiddleware, MeController.update);
+router.delete("/auth/me", AuthMiddleware, MeController.delete);
 router.get("/auth/verify-email", VerifyEmailController);
 router.post("/auth/refresh", AuthMiddleware, RefreshTokenController);
 router.post("/auth/forgot-password", AuthLimiter, ForgotPasswordController);
