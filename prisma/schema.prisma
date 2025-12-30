@@ -77,8 +77,12 @@ model Placemark {
   name        String
   description String?
   
-  // Physical address of the camping spot
-  address     String
+  // Physical address details
+  street      String
+  house_number String
+  zip         String
+  city        String
+  country     String
   
   // Geographical coordinates for map placement
   lat         Float

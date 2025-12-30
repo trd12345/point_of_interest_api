@@ -6,9 +6,13 @@ const placemarkSchema = z.object({
     name: z.string().min(1),
     description: z.string().optional(),
     categoryId: z.string().min(1),
-    address: z.string().min(1),
-    lat: z.number(),
-    lng: z.number(),
+    street: z.string().min(1),
+    house_number: z.string().min(1),
+    zip: z.string().min(1),
+    city: z.string().min(1),
+    country: z.string().min(1),
+    lat: z.number().optional(),
+    lng: z.number().optional(),
     is_public: z.boolean().optional()
 });
 
@@ -41,8 +45,28 @@ export const PlacemarkController = {
             });
         }
 
+        const data = parsed.data;
+
+        // Geocoding Logic: If lat/lng missing, fetch them
+        if (data.lat === undefined || data.lng === undefined) {
+            // Construct address string for search: "Street HouseNo, Zip City, Country"
+            const searchAddress = `${data.street} ${data.house_number}, ${data.zip} ${data.city}, ${data.country}`;
+
+            const coords = await container.geocodingService.getCoordinates(searchAddress);
+            if (coords) {
+                data.lat = coords.lat;
+                data.lng = coords.lng;
+            } else {
+                return res.status(422).json({
+                    error: "Could not find location for the given address. Please check the address or provide coordinates manually."
+                });
+            }
+        }
+
         try {
-            const placemark = await container.placemarkService.create(user.id, parsed.data);
+            // We cast data to 'any' or check properties because safeParse returns optional types, 
+            // but PlacemarkService expects mandatory lat/lng. We ensured they exist above.
+            const placemark = await container.placemarkService.create(user.id, data as any);
             return res.json(placemark);
         } catch (e) {
             return res.status(500).json({ error: "Failed to create placemark" });

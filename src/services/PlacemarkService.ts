@@ -46,7 +46,11 @@ export class PlacemarkService {
         name: string;
         description?: string;
         categoryId: string;
-        address: string;
+        street: string;
+        house_number: string;
+        zip: string;
+        city: string;
+        country: string;
         lat: number;
         lng: number;
     }) {
@@ -63,7 +67,11 @@ export class PlacemarkService {
         name: string;
         description: string;
         categoryId: string;
-        address: string;
+        street: string;
+        house_number: string;
+        zip: string;
+        city: string;
+        country: string;
         lat: number;
         lng: number;
         is_public: boolean;
