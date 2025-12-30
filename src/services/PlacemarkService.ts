@@ -98,4 +98,4 @@ export class PlacemarkService {
             where: { id: placemarkId }
         });
     }
-}
+} 

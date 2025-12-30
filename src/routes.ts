@@ -41,4 +41,4 @@ router.get("/placemarks/:id", PlacemarkController.getOne);
 router.put("/placemarks/:id", AuthMiddleware, PlacemarkController.update);
 router.delete("/placemarks/:id", AuthMiddleware, PlacemarkController.delete);
 
-export default router;
+export default router; 
