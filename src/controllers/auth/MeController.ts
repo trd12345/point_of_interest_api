@@ -51,4 +51,4 @@ export const MeController = {
             return res.status(500).json({ error: "Failed to delete account" });
         }
     }
-};
+}; 

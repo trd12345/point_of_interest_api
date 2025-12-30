@@ -30,4 +30,4 @@ export const CategoryController = {
             return res.status(500).json({ error: "Failed to create category" });
         }
     }
-};
+}; 

@@ -14,7 +14,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model User { 
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   email             String    @unique
   email_verified_at DateTime?
@@ -30,7 +30,7 @@ model User {
   Placemark     Placemark[]
 }
 
-model Profile {
+model Profile { 
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   first_name String
   last_name  String
@@ -53,7 +53,7 @@ model RefreshToken {
   user User @relation(fields: [userId], references: [id])
 }
 
-model PasswordReset {
+model PasswordReset { 
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   token     String   @unique
   createdAt DateTime @default(now())
@@ -62,7 +62,7 @@ model PasswordReset {
 }
 
 // Represents a classification for camping spots (e.g., Garden, Driveway).
-model Category {
+model Category { 
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String?
@@ -72,7 +72,7 @@ model Category {
 }
 
 // Represents a physical camping listing hosted by a user.
-model Placemark {
+model Placemark { 
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String?
@@ -101,4 +101,4 @@ model Placemark {
   userId     String   @db.ObjectId
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @db.ObjectId
-}
+} 

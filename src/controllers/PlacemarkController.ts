@@ -109,4 +109,4 @@ export const PlacemarkController = {
             return res.status(500).json({ error: "Something went wrong" });
         }
     }
-};
+}; 

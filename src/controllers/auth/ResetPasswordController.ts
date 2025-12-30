@@ -42,4 +42,4 @@ export default async function ResetPasswordController(req: Request, res: Respons
             error: "An error occurred while processing your request."
         });
     }
-}
+} 
