@@ -13,11 +13,16 @@ export class CategoryService {
     }
 
     // Create a new category
-    async create(data: { name: string; description?: string }) {
+    async create(userId: string, data: { name: string; description?: string }) {
         return this.db.category.create({
-            data
+            data: {
+                ...data,
+                userId
+            }
         });
     }
+
+
 
     // Delete a category by ID
     async delete(id: string) {

@@ -8,7 +8,7 @@ const placemarkSchema = z.object({
     categoryId: z.string().min(1),
     street: z.string().min(1),
     house_number: z.string().min(1),
-    zip: z.string().min(1),
+    zip: z.coerce.number(), // Automatically convert string input to number
     city: z.string().min(1),
     country: z.string().min(1),
     lat: z.number().optional(),
@@ -63,10 +63,27 @@ export const PlacemarkController = {
             }
         }
 
+        // Image Upload Logic
+        let imageUrl: string | undefined;
+        if (req.file) {
+            try {
+                imageUrl = await container.imageService.uploadImage(req.file.buffer);
+            } catch (error) {
+                return res.status(500).json({ error: "Image upload failed" });
+            }
+        }
+
         try {
-            // We cast data to 'any' or check properties because safeParse returns optional types, 
-            // but PlacemarkService expects mandatory lat/lng. We ensured they exist above.
-            const placemark = await container.placemarkService.create(user.id, data as any);
+            // Ensure lat/lng are present (logic above guarantees this or returns 422)
+            // We use '!' assertions because we know they are defined now (or we returned)
+            const placemarkData = {
+                ...data,
+                lat: data.lat!,
+                lng: data.lng!,
+                image_url: imageUrl
+            };
+
+            const placemark = await container.placemarkService.create(user.id, placemarkData);
             return res.json(placemark);
         } catch (e) {
             return res.status(500).json({ error: "Failed to create placemark" });

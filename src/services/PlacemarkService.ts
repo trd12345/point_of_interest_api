@@ -48,11 +48,12 @@ export class PlacemarkService {
         categoryId: string;
         street: string;
         house_number: string;
-        zip: string;
+        zip: number;
         city: string;
         country: string;
         lat: number;
         lng: number;
+        image_url?: string;
     }) {
         return this.db.placemark.create({
             data: {
@@ -69,7 +70,7 @@ export class PlacemarkService {
         categoryId: string;
         street: string;
         house_number: string;
-        zip: string;
+        zip: number;
         city: string;
         country: string;
         lat: number;
