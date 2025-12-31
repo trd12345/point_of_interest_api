@@ -46,9 +46,14 @@ export class PlacemarkService {
         name: string;
         description?: string;
         categoryId: string;
-        address: string;
+        street: string;
+        house_number: string;
+        zip: number;
+        city: string;
+        country: string;
         lat: number;
         lng: number;
+        image_url?: string;
     }) {
         return this.db.placemark.create({
             data: {
@@ -63,7 +68,11 @@ export class PlacemarkService {
         name: string;
         description: string;
         categoryId: string;
-        address: string;
+        street: string;
+        house_number: string;
+        zip: number;
+        city: string;
+        country: string;
         lat: number;
         lng: number;
         is_public: boolean;
@@ -90,4 +99,4 @@ export class PlacemarkService {
             where: { id: placemarkId }
         });
     }
-}
+} 

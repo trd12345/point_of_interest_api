@@ -40,4 +40,4 @@ export class ChangePasswordService {
 
         return true;
     }
-}
+} 

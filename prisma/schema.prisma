@@ -14,7 +14,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model User { 
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   email             String    @unique
   email_verified_at DateTime?
@@ -28,9 +28,10 @@ model User {
   RefreshToken  RefreshToken[]
   PasswordReset PasswordReset[]
   Placemark     Placemark[]
+  Category      Category[]
 }
 
-model Profile {
+model Profile { 
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   first_name String
   last_name  String
@@ -53,7 +54,7 @@ model RefreshToken {
   user User @relation(fields: [userId], references: [id])
 }
 
-model PasswordReset {
+model PasswordReset { 
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   token     String   @unique
   createdAt DateTime @default(now())
@@ -62,23 +63,32 @@ model PasswordReset {
 }
 
 // Represents a classification for camping spots (e.g., Garden, Driveway).
-model Category {
+model Category { 
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String?
   created_at  DateTime    @default(now())
   updated_at  DateTime    @updatedAt
   Placemark   Placemark[]
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.ObjectId
 }
 
 // Represents a physical camping listing hosted by a user.
-model Placemark {
+model Placemark { 
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String?
   
-  // Physical address of the camping spot
-  address     String
+  // Physical address details
+  street      String
+  house_number String
+  zip         Int
+  city        String
+  country     String
+  
+  // Image URL from Cloudinary (Level 2 Feature)
+  image_url   String?
   
   // Geographical coordinates for map placement
   lat         Float
@@ -97,4 +107,4 @@ model Placemark {
   userId     String   @db.ObjectId
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @db.ObjectId
-}
+} 

@@ -12,6 +12,9 @@ import ResetPasswordController from "./controllers/auth/ResetPasswordController"
 import { CategoryController } from "./controllers/CategoryController";
 import { PlacemarkController } from "./controllers/PlacemarkController";
 import { ChangePasswordController } from "./controllers/auth/ChangePasswordController";
+import multer from "multer";
+
+const upload = multer();
 
 const router = Router();
 
@@ -35,10 +38,10 @@ router.post("/categories", AuthMiddleware, CategoryController.create);
 
 // Placemark Routes - Manage camping spots
 router.get("/placemarks", PlacemarkController.getAll);
-router.post("/placemarks", AuthMiddleware, PlacemarkController.create);
+router.post("/placemarks", AuthMiddleware, upload.single("image"), PlacemarkController.create);
 router.get("/placemarks/:id", PlacemarkController.getOne);
 // Protected: Only owner can update/delete
 router.put("/placemarks/:id", AuthMiddleware, PlacemarkController.update);
 router.delete("/placemarks/:id", AuthMiddleware, PlacemarkController.delete);
 
-export default router;
+export default router; 

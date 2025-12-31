@@ -16,6 +16,9 @@ export const CategoryController = {
 
     // Handler to create a new category
     create: async (req: Request, res: Response) => {
+        const user = (req as any).user;
+        if (!user) return res.status(401).json({ error: "Unauthorized" });
+
         try {
             const parsed = createCategorySchema.safeParse(req.body);
             if (!parsed.success) {
@@ -24,7 +27,7 @@ export const CategoryController = {
                 });
             }
 
-            const category = await container.categoryService.create(parsed.data);
+            const category = await container.categoryService.create(user.id, parsed.data);
             return res.json(category);
         } catch (e) {
             return res.status(500).json({ error: "Failed to create category" });

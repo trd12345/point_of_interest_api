@@ -1,0 +1,26 @@
+meta {
+  name: Create Placemark (Image Upload)
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/placemarks
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Cookie: token={{token}}
+}
+
+body:multipart-form {
+  name: Camping with View
+  categoryId: 676b53982071f11e9be78107
+  street: Domplatz 1
+  city: Regensburg
+  country: Germany
+  zip: 93047
+  house_number: 1
+  image: @file(/Users/anhduc/.gemini/antigravity/brain/c862a094-8509-4fdd-8f0b-23258971681c/uploaded_image_1767106937764.png)
+}

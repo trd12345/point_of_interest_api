@@ -6,9 +6,13 @@ const placemarkSchema = z.object({
     name: z.string().min(1),
     description: z.string().optional(),
     categoryId: z.string().min(1),
-    address: z.string().min(1),
-    lat: z.number(),
-    lng: z.number(),
+    street: z.string().min(1),
+    house_number: z.string().min(1),
+    zip: z.coerce.number(), // Automatically convert string input to number
+    city: z.string().min(1),
+    country: z.string().min(1),
+    lat: z.number().optional(),
+    lng: z.number().optional(),
     is_public: z.boolean().optional()
 });
 
@@ -41,8 +45,45 @@ export const PlacemarkController = {
             });
         }
 
+        const data = parsed.data;
+
+        // Geocoding Logic: If lat/lng missing, fetch them
+        if (data.lat === undefined || data.lng === undefined) {
+            // Construct address string for search: "Street HouseNo, Zip City, Country"
+            const searchAddress = `${data.street} ${data.house_number}, ${data.zip} ${data.city}, ${data.country}`;
+
+            const coords = await container.geocodingService.getCoordinates(searchAddress);
+            if (coords) {
+                data.lat = coords.lat;
+                data.lng = coords.lng;
+            } else {
+                return res.status(422).json({
+                    error: "Could not find location for the given address. Please check the address or provide coordinates manually."
+                });
+            }
+        }
+
+        // Image Upload Logic
+        let imageUrl: string | undefined;
+        if (req.file) {
+            try {
+                imageUrl = await container.imageService.uploadImage(req.file.buffer);
+            } catch (error) {
+                return res.status(500).json({ error: "Image upload failed" });
+            }
+        }
+
         try {
-            const placemark = await container.placemarkService.create(user.id, parsed.data);
+            // Ensure lat/lng are present (logic above guarantees this or returns 422)
+            // We use '!' assertions because we know they are defined now (or we returned)
+            const placemarkData = {
+                ...data,
+                lat: data.lat!,
+                lng: data.lng!,
+                image_url: imageUrl
+            };
+
+            const placemark = await container.placemarkService.create(user.id, placemarkData);
             return res.json(placemark);
         } catch (e) {
             return res.status(500).json({ error: "Failed to create placemark" });
@@ -85,4 +126,4 @@ export const PlacemarkController = {
             return res.status(500).json({ error: "Something went wrong" });
         }
     }
-};
+}; 

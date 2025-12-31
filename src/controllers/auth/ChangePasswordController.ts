@@ -30,4 +30,4 @@ export const ChangePasswordController = async (req: Request, res: Response) => {
         }
         return res.status(500).json({ error: "Something went wrong" });
     }
-};
+}; 
