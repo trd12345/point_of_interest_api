@@ -1,0 +1,16 @@
+meta {
+  name: delete-current-profile
+  type: http
+  seq: 6
+}
+
+delete {
+  url: 127.0.0.1:3000/auth/me
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

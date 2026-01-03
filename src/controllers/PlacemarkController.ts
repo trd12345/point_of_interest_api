@@ -7,7 +7,7 @@ const placemarkSchema = z.object({
     description: z.string().optional(),
     categoryId: z.string().min(1),
     street: z.string().min(1),
-    house_number: z.string().min(1),
+    house_number: z.string().optional(), // house number is optional
     zip: z.coerce.number(), // Automatically convert string input to number
     city: z.string().min(1),
     country: z.string().min(1),
@@ -29,6 +29,7 @@ export const PlacemarkController = {
             const placemark = await container.placemarkService.getById(req.params.id);
             return res.json(placemark);
         } catch (e) {
+            console.log(e);
             return res.status(404).json({ error: "Placemark not found" });
         }
     },
@@ -36,8 +37,6 @@ export const PlacemarkController = {
     // Create a new placemark
     create: async (req: Request, res: Response) => {
         const user = (req as any).user;
-        if (!user) return res.status(401).json({ error: "Unauthorized" });
-
         const parsed = placemarkSchema.safeParse(req.body);
         if (!parsed.success) {
             return res.status(422).json({
@@ -93,7 +92,6 @@ export const PlacemarkController = {
     // Update an existing placemark
     update: async (req: Request, res: Response) => {
         const user = (req as any).user;
-        if (!user) return res.status(401).json({ error: "Unauthorized" });
 
         const parsed = placemarkSchema.partial().safeParse(req.body);
         if (!parsed.success) {
@@ -115,7 +113,6 @@ export const PlacemarkController = {
     // Delete a placemark
     delete: async (req: Request, res: Response) => {
         const user = (req as any).user;
-        if (!user) return res.status(401).json({ error: "Unauthorized" });
 
         try {
             await container.placemarkService.delete(user.id, req.params.id);

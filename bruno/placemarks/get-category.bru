@@ -1,0 +1,16 @@
+meta {
+  name: get-category
+  type: http
+  seq: 4
+}
+
+get {
+  url: 127.0.0.1:3000/categories
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,16 @@
+meta {
+  name: create-placemarks
+  type: http
+  seq: 2
+}
+
+post {
+  url: 127.0.0.1:3000/placemarks
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

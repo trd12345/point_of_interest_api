@@ -1,5 +1,5 @@
-import {randomUUID} from "crypto";
-import jwt, {SignOptions} from "jsonwebtoken";
+import { randomUUID } from "crypto";
+import jwt, { SignOptions } from "jsonwebtoken";
 
 const accessSecret = process.env.JWT_SECRET as string;
 const refreshSecret = process.env.JWT_SECRET as string;
@@ -12,22 +12,25 @@ interface JwtPayload {
     email: string;
 }
 
-export function generateAccessToken(payload: any) {
+export function generateAccessToken(payload: any, options?: SignOptions) {
     return jwt.sign(
         {
             ...payload,
             jti: randomUUID(),
         },
         accessSecret,
-        {expiresIn: accessExpires});
+        {
+            expiresIn: accessExpires,
+            ...options
+        });
 }
 
 export function generateRefreshToken(payload: any) {
-    return jwt.sign(payload, refreshSecret, {expiresIn: refreshExpires});
+    return jwt.sign(payload, refreshSecret, { expiresIn: refreshExpires });
 }
 
-export function passwordToken(payload: {userId: string, email: string}) {
-    return jwt.sign(payload, refreshSecret, {expiresIn: refreshExpires});
+export function passwordToken(payload: { userId: string, email: string }) {
+    return jwt.sign(payload, refreshSecret, { expiresIn: refreshExpires });
 }
 
 export function refreshAccessToken(payload: JwtPayload) {

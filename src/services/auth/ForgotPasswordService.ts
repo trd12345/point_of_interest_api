@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../../generated/prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 import { passwordToken } from "../../lib/jwt";
 import { sendMail } from "../../lib/mailer";
 

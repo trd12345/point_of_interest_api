@@ -1,6 +1,6 @@
- import {PrismaClient} from "../../../generated/prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 import jwt from "jsonwebtoken";
-import {refreshAccessToken, refreshRefreshToken} from "../../lib/jwt";
+import { refreshAccessToken, refreshRefreshToken } from "../../lib/jwt";
 
 export class RefreshTokenService {
     constructor(private db: PrismaClient) {
@@ -8,7 +8,7 @@ export class RefreshTokenService {
 
     async refresh(refreshToken: string) {
         const stored = await this.db.refreshToken.findUnique({
-            where: {token: refreshToken}
+            where: { token: refreshToken }
         });
 
         if (!stored || stored.revoked) {
@@ -25,15 +25,15 @@ export class RefreshTokenService {
             throw new Error("INVALID_REFRESH_TOKEN");
         }
 
-        const newRefresh = refreshRefreshToken({id: decoded.id, email: decoded.email});
+        const newRefresh = refreshRefreshToken({ id: decoded.id, email: decoded.email });
 
-        const newAccess = refreshAccessToken({id: decoded.id, email: decoded.email});
+        const newAccess = refreshAccessToken({ id: decoded.id, email: decoded.email });
 
-        const {jti} = jwt.decode(newAccess) as any;
+        const { jti } = jwt.decode(newAccess) as any;
 
         await this.db.refreshToken.update({
-            where: {token: refreshToken},
-            data: {revoked: true}
+            where: { token: refreshToken },
+            data: { revoked: true }
         });
 
 

@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 
 /**
  * Service to handle Category operations.
@@ -14,6 +14,14 @@ export class CategoryService {
 
     // Create a new category
     async create(userId: string, data: { name: string; description?: string }) {
+        // get any category with the similar name
+        const existingCategory = await this.db.category.findMany({
+            where: { name: { contains: data.name, mode: "insensitive" } }
+        });
+
+        if (existingCategory.length > 0) {
+            throw new Error("Category already exists");
+        }
         return this.db.category.create({
             data: {
                 ...data,
@@ -21,8 +29,6 @@ export class CategoryService {
             }
         });
     }
-
-
 
     // Delete a category by ID
     async delete(id: string) {
