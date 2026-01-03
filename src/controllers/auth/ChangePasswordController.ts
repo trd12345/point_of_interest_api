@@ -3,8 +3,8 @@ import { container } from "../../lib/container";
 import { z } from "zod";
 
 const changePasswordSchema = z.object({
-    oldPassword: z.string().min(1),
-    newPassword: z.string().min(8)
+    old_password: z.string().min(1),
+    new_password: z.string().min(8)
 });
 
 /**

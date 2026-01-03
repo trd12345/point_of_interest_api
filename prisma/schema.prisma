@@ -11,6 +11,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
+  //url      = env("DATABASE_URL")
 }
 
 model User {
@@ -64,7 +65,7 @@ model PasswordReset {
 // Represents a classification for camping spots (e.g., Garden, Driveway).
 model Category {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  name        String      @unique
   description String?
   created_at  DateTime    @default(now())
   updated_at  DateTime    @updatedAt
@@ -81,7 +82,7 @@ model Placemark {
 
   // Physical address details
   street       String
-  house_number String
+  house_number String?
   zip          Int
   city         String
   country      String

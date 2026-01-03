@@ -29,7 +29,7 @@ export class LoginService {
         }
 
         delete (user as any).password;
-
+        // if user is admin, set tokenOptions to 30m
         const tokenOptions = user.role === "ADMIN" ? { expiresIn: "30m" } : {};
 
         // Cast to any to bypass strict literal type check temporarily, or define SignOptions properly

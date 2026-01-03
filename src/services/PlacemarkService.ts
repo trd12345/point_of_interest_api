@@ -32,10 +32,21 @@ export class PlacemarkService {
                 user: {
                     select: {
                         id: true,
-                        profile: true
+                        profile: {
+                            select: {
+                                first_name: true,
+                                last_name: true
+                            }
+                        }
                     }
                 },
-                category: true
+                category: {
+                    select: {
+                        id: true,
+                        name: true,
+                        description: true
+                    }
+                }
             }
         });
         return placemark;
@@ -47,13 +58,14 @@ export class PlacemarkService {
         description?: string;
         categoryId: string;
         street: string;
-        house_number: string;
+        house_number?: string;
         zip: number;
         city: string;
         country: string;
         lat: number;
         lng: number;
         image_url?: string;
+        is_public?: boolean;
     }) {
         return this.db.placemark.create({
             data: {
@@ -75,7 +87,7 @@ export class PlacemarkService {
         country: string;
         lat: number;
         lng: number;
-        is_public: boolean;
+        is_public?: boolean;
     }>) {
         // Ensure ownership
         const placemark = await this.db.placemark.findUnique({ where: { id: placemarkId } });

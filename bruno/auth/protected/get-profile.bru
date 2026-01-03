@@ -1,11 +1,11 @@
 meta {
-  name: create-category
+  name: get-profile
   type: http
-  seq: 1
+  seq: 6
 }
 
-post {
-  url: 127.0.0.1:3000/categories
+get {
+  url: 127.0.0.1:3000/auth/me
   body: none
   auth: inherit
 }

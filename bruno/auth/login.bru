@@ -1,30 +1,23 @@
 meta {
   name: login
   type: http
-  seq: 1
+  seq: 2
 }
 
 post {
-  url: http://localhost:3000/auth/login
+  url: 127.0.0.1:3000/auth/login
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "email": "test10@mail.com",
-    "password": "Password1#"
+    "email": "max-muster@mail.com",
+    "password": "Maxmuster11!"
   }
 }
 
 settings {
   encodeUrl: true
   timeout: 0
-}
-
-script:post-response {
-  const body = res.getBody();
-  if (body.access_token) {
-      bru.setEnvVar("access_token", body.access_token);
-  }
 }

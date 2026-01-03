@@ -8,7 +8,7 @@ export class ChangePasswordService {
     constructor(private db: PrismaClient) {
     }
 
-    async changePassword(userId: string, data: { oldPassword: string, newPassword: string }) {
+    async changePassword(userId: string, data: { old_password: string, new_password: string }) {
         const user = await this.db.user.findUnique({
             where: { id: userId }
         });
@@ -18,13 +18,13 @@ export class ChangePasswordService {
         }
 
         // 1. Verify old password
-        const valid = await bcrypt.compare(data.oldPassword, user.password);
+        const valid = await bcrypt.compare(data.old_password, user.password);
         if (!valid) {
             throw new Error("INVALID_PASSWORD");
         }
 
         // 2. Hash new password
-        const hashedPassword = await bcrypt.hash(data.newPassword, 10);
+        const hashedPassword = await bcrypt.hash(data.new_password, 10);
 
         // 3. Update password
         await this.db.user.update({

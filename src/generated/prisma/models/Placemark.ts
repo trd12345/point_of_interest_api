@@ -268,7 +268,7 @@ export type PlacemarkGroupByOutputType = {
   name: string
   description: string | null
   street: string
-  house_number: string
+  house_number: string | null
   zip: number
   city: string
   country: string
@@ -311,7 +311,7 @@ export type PlacemarkWhereInput = {
   name?: Prisma.StringFilter<"Placemark"> | string
   description?: Prisma.StringNullableFilter<"Placemark"> | string | null
   street?: Prisma.StringFilter<"Placemark"> | string
-  house_number?: Prisma.StringFilter<"Placemark"> | string
+  house_number?: Prisma.StringNullableFilter<"Placemark"> | string | null
   zip?: Prisma.IntFilter<"Placemark"> | number
   city?: Prisma.StringFilter<"Placemark"> | string
   country?: Prisma.StringFilter<"Placemark"> | string
@@ -358,7 +358,7 @@ export type PlacemarkWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Placemark"> | string
   description?: Prisma.StringNullableFilter<"Placemark"> | string | null
   street?: Prisma.StringFilter<"Placemark"> | string
-  house_number?: Prisma.StringFilter<"Placemark"> | string
+  house_number?: Prisma.StringNullableFilter<"Placemark"> | string | null
   zip?: Prisma.IntFilter<"Placemark"> | number
   city?: Prisma.StringFilter<"Placemark"> | string
   country?: Prisma.StringFilter<"Placemark"> | string
@@ -408,7 +408,7 @@ export type PlacemarkScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Placemark"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Placemark"> | string | null
   street?: Prisma.StringWithAggregatesFilter<"Placemark"> | string
-  house_number?: Prisma.StringWithAggregatesFilter<"Placemark"> | string
+  house_number?: Prisma.StringNullableWithAggregatesFilter<"Placemark"> | string | null
   zip?: Prisma.IntWithAggregatesFilter<"Placemark"> | number
   city?: Prisma.StringWithAggregatesFilter<"Placemark"> | string
   country?: Prisma.StringWithAggregatesFilter<"Placemark"> | string
@@ -428,7 +428,7 @@ export type PlacemarkCreateInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -448,7 +448,7 @@ export type PlacemarkUncheckedCreateInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -467,7 +467,7 @@ export type PlacemarkUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -486,7 +486,7 @@ export type PlacemarkUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -506,7 +506,7 @@ export type PlacemarkCreateManyInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -525,7 +525,7 @@ export type PlacemarkUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -542,7 +542,7 @@ export type PlacemarkUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -746,7 +746,7 @@ export type PlacemarkCreateWithoutUserInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -765,7 +765,7 @@ export type PlacemarkUncheckedCreateWithoutUserInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -812,7 +812,7 @@ export type PlacemarkScalarWhereInput = {
   name?: Prisma.StringFilter<"Placemark"> | string
   description?: Prisma.StringNullableFilter<"Placemark"> | string | null
   street?: Prisma.StringFilter<"Placemark"> | string
-  house_number?: Prisma.StringFilter<"Placemark"> | string
+  house_number?: Prisma.StringNullableFilter<"Placemark"> | string | null
   zip?: Prisma.IntFilter<"Placemark"> | number
   city?: Prisma.StringFilter<"Placemark"> | string
   country?: Prisma.StringFilter<"Placemark"> | string
@@ -832,7 +832,7 @@ export type PlacemarkCreateWithoutCategoryInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -851,7 +851,7 @@ export type PlacemarkUncheckedCreateWithoutCategoryInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -895,7 +895,7 @@ export type PlacemarkCreateManyUserInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -913,7 +913,7 @@ export type PlacemarkUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -931,7 +931,7 @@ export type PlacemarkUncheckedUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -949,7 +949,7 @@ export type PlacemarkUncheckedUpdateManyWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -968,7 +968,7 @@ export type PlacemarkCreateManyCategoryInput = {
   name: string
   description?: string | null
   street: string
-  house_number: string
+  house_number?: string | null
   zip: number
   city: string
   country: string
@@ -986,7 +986,7 @@ export type PlacemarkUpdateWithoutCategoryInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1004,7 +1004,7 @@ export type PlacemarkUncheckedUpdateWithoutCategoryInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1022,7 +1022,7 @@ export type PlacemarkUncheckedUpdateManyWithoutCategoryInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   street?: Prisma.StringFieldUpdateOperationsInput | string
-  house_number?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   zip?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   country?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1099,7 +1099,7 @@ export type $PlacemarkPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     name: string
     description: string | null
     street: string
-    house_number: string
+    house_number: string | null
     zip: number
     city: string
     country: string

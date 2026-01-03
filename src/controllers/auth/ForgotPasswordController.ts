@@ -1,6 +1,6 @@
-import {z} from "zod";
-import {container} from "../../lib/container";
-import {Request, Response} from "express";
+import { z } from "zod";
+import { container } from "../../lib/container";
+import { Request, Response } from "express";
 
 // 1. Validation for email
 const forgotPasswordSchema = z.object({
@@ -19,13 +19,15 @@ export async function ForgotPasswordController(req: Request, res: Response) {
         // 3. Call forgot password service
         await container.forgotPasswordService.forgotPassword(req.body)
         // 4. Return response
-        return res.json({message: "Check your email for reset link."});
+        return res.json({ message: "Check your email for reset link." });
     } catch (error: any) {
         // 5. Handle errors
         const msg = error.message;
         if (msg === "USER_NOT_FOUND") {
-            return res.status(404).json({errors: "User not found"});
+            return res.status(404).json({ errors: "User not found" });
         }
-        return res.status(500).json({errors: "Something went wrong"});
+        // When error is not expected
+        console.log(error);
+        return res.status(500).json({ errors: "Something went wrong" });
     }
 }
