@@ -6,27 +6,55 @@ export default async function VerifyEmailController(req: Request, res: Response)
         const {token} = req.query;
 
         if (!token) {
-            return res.status(422).json({errors: ["Verification token missing"]});
+            return res.status(422).json({
+                success: false,
+                message: "Verification token missing",
+                data: null,
+                errors: ["Verification token missing"],
+            });
         }
 
         await container.emailVerificationService.verifyEmail(token as string);
 
         return res.json({
-            message: "Email successfully verified."
+            success: true,
+            message: "Email successfully verified.",
+            data: null,
+            errors: null,
         });
 
     } catch (e: any) {
         const msg = e.message;
 
         if (msg === "INVALID_OR_EXPIRED_TOKEN")
-            return res.status(400).json({errors: ["Invalid or expired token"]});
+            return res.status(400).json({
+                success: false,
+                message: "Invalid or expired token",
+                data: null,
+                errors: ["Invalid or expired token"],
+            });
 
         if (msg === "ALREADY_VERIFIED")
-            return res.status(400).json({errors: ["Email already verified"]});
+            return res.status(400).json({
+                success: false,
+                message: "Email already verified",
+                data: null,
+                errors: ["Email already verified"],
+            });
 
         if (msg === "USER_NOT_FOUND")
-            return res.status(404).json({errors: ["User not found"]});
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+                data: null,
+                errors: ["User not found"],
+            });
         
-        return res.status(500).json({error: "Something went wrong"});
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+            data: null,
+            errors: ["Something went wrong"],
+        });
     }
 }

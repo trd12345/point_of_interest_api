@@ -6,7 +6,12 @@ export default async function RefreshTokenController(req: Request, res: Response
         const refreshToken = req.cookies?.refresh_token;
 
         if (!refreshToken) {
-            return res.status(401).json({errors: ["No refresh token"]});
+            return res.status(401).json({
+                success: false,
+                message: "No refresh token",
+                data: null,
+                errors: ["No refresh token"],
+            });
         }
 
         const tokens = await container.refreshTokenService.refresh(refreshToken);
@@ -22,15 +27,29 @@ export default async function RefreshTokenController(req: Request, res: Response
         });
 
         return res.json({
+            success: true,
             message: "Token refreshed",
-            access_token: tokens.access_token,
+            data: {
+                access_token: tokens.access_token,
+            },
+            errors: null,
         });
 
     } catch (e: any) {
         if (e.message === "INVALID_OR_EXPIRED_REFRESH_TOKEN") {
-            return res.status(401).json({errors: ["Invalid or expired refresh token"]});
+            return res.status(401).json({
+                success: false,
+                message: "Invalid or expired refresh token",
+                data: null,
+                errors: ["Invalid or expired refresh token"],
+            });
         }
 
-        return res.status(500).json({errors: ["Something went wrong"]});
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+            data: null,
+            errors: ["Something went wrong"],
+        });
     }
 }

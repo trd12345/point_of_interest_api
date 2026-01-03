@@ -15,20 +15,30 @@ export default async function LoginController(req: Request, res: Response) {
         });
 
         return res.json({
+            success: true,
             message: "Logged in",
-            user: result.user,
-            access_token: result.access_token,
+            data: {
+                user: result.user,
+                access_token: result.access_token,
+            },
+            errors: null,
         });
 
     } catch (error: any) {
         if (error instanceof Error && error.message === "INVALID_CREDENTIALS") {
-            return res.status(404).json({
-                errors: ["Invalid Email or Password"],
+            return res.status(400).json({
+                success: false,
+                message: "Failed to login",
+                data: null,
+                errors: ["Invalid credentials"],
             });
         }
 
         return res.status(500).json({
-            error: "Something went wrong.",
+            success: false,
+            message: "Internal Server Error",
+            data: null,
+            errors: ["Internal Server Error"],
         });
     }
 }

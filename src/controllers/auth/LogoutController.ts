@@ -6,7 +6,12 @@ export default async function LogoutController(req: Request, res: Response) {
     const refreshToken = req.cookies?.refresh_token;
 
     if (!refreshToken) {
-        return res.status(200).json({message: "Logged out"});
+        return res.status(200).json({
+            success: true,
+            message: "Logged out",
+            data: null,
+            errors: null,
+        });
     }
 
     await container.logoutService.logout(refreshToken);
@@ -20,5 +25,10 @@ export default async function LogoutController(req: Request, res: Response) {
     });
 
 
-    return res.json({message: "Logged out."});
+    return res.json({
+        success: true,
+        message: "Logged out.",
+        data: null,
+        errors: null,
+    });
 }
