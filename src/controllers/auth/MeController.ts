@@ -16,12 +16,29 @@ export const MeController = {
     get: async (req: AuthRequest, res: Response) => {
         try {
             const user = await container.meService.getMe(req.user!.id);
-            return res.json({ user });
+            return res.json({
+                success: true,
+                message: "User found",
+                data: {
+                    user: user,
+                },
+                errors: null,
+            });
         } catch (error: unknown) {
             if (error instanceof Error && error.message === "USER_NOT_FOUND") {
-                return res.status(404).json({ errors: ["User not found"] });
+                return res.status(404).json({
+                    success: false,
+                    message: "User not found",
+                    data: null,
+                    errors: ["User not found"],
+                });
             }
-            return res.status(500).json({ error: "Something went wrong" });
+            return res.status(500).json({
+                success: false,
+                message: "Something went wrong",
+                data: null,
+                errors: ["Something went wrong"],
+            });
         }
     },
 
@@ -30,15 +47,30 @@ export const MeController = {
         const parsed = updateProfileSchema.safeParse(req.body);
         if (!parsed.success) {
             return res.status(422).json({
+                success: false,
+                message: "Validation failed",
+                data: null,
                 errors: parsed.error.issues.map((i) => i.message),
             });
         }
 
         try {
             const updatedUser = await container.meService.updateProfile(req.user!.id, parsed.data);
-            return res.json({ message: "Profile updated", user: updatedUser });
+            return res.json({
+                success: true,
+                message: "Profile updated",
+                data: {
+                    user: updatedUser,
+                },
+                errors: null,
+            });
         } catch (e) {
-            return res.status(500).json({ error: "Failed to update profile" });
+            return res.status(500).json({
+                success: false,
+                message: "Failed to update profile",
+                data: null,
+                errors: ["Failed to update profile"],
+            });
         }
     },
 
@@ -46,9 +78,19 @@ export const MeController = {
     delete: async (req: AuthRequest, res: Response) => {
         try {
             await container.meService.deleteAccount(req.user!.id);
-            return res.json({ message: "Account deleted successfully" });
+            return res.json({
+                success: true,
+                message: "Account deleted successfully",
+                data: null,
+                errors: null,
+            });
         } catch (e) {
-            return res.status(500).json({ error: "Failed to delete account" });
+            return res.status(500).json({
+                success: false,
+                message: "Failed to delete account",
+                data: null,
+                errors: ["Failed to delete account"],
+            });
         }
     }
 }; 

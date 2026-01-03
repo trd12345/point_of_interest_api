@@ -20,17 +20,36 @@ export const PlacemarkController = {
     // Get all placemarks
     getAll: async (req: Request, res: Response) => {
         const placemarks = await container.placemarkService.getAll();
-        return res.json(placemarks);
+        return res.json({
+            success: true,
+            message: "Placemarks retrieved successfully",
+            data: {
+                placemarks,
+            },
+            errors: null,
+        });
     },
 
     // Get a single placemark by ID
     getOne: async (req: Request, res: Response) => {
         try {
             const placemark = await container.placemarkService.getById(req.params.id);
-            return res.json(placemark);
+            return res.json({
+                success: true,
+                message: "Placemark found",
+                data: {
+                    placemark,
+                },
+                errors: null,
+            });
         } catch (e) {
             console.log(e);
-            return res.status(404).json({ error: "Placemark not found" });
+            return res.status(404).json({
+                success: false,
+                message: "Placemark not found",
+                data: null,
+                errors: ["Placemark not found"],
+            });
         }
     },
 
@@ -40,6 +59,9 @@ export const PlacemarkController = {
         const parsed = placemarkSchema.safeParse(req.body);
         if (!parsed.success) {
             return res.status(422).json({
+                success: false,
+                message: "Validation failed",
+                data: null,
                 errors: parsed.error.issues.map((i) => i.message),
             });
         }
@@ -57,7 +79,10 @@ export const PlacemarkController = {
                 data.lng = coords.lng;
             } else {
                 return res.status(422).json({
-                    error: "Could not find location for the given address. Please check the address or provide coordinates manually."
+                    success: false,
+                    message: "Geocoding failed",
+                    data: null,
+                    errors: ["Could not find location for the given address. Please check the address or provide coordinates manually."],
                 });
             }
         }
@@ -68,7 +93,12 @@ export const PlacemarkController = {
             try {
                 imageUrl = await container.imageService.uploadImage(req.file.buffer);
             } catch (error) {
-                return res.status(500).json({ error: "Image upload failed" });
+                return res.status(500).json({
+                    success: false,
+                    message: "Image upload failed",
+                    data: null,
+                    errors: ["Image upload failed"],
+                });
             }
         }
 
@@ -83,9 +113,21 @@ export const PlacemarkController = {
             };
 
             const placemark = await container.placemarkService.create(user.id, placemarkData);
-            return res.json(placemark);
+            return res.status(201).json({
+                success: true,
+                message: "Placemark created successfully",
+                data: {
+                    placemark,
+                },
+                errors: null,
+            });
         } catch (e) {
-            return res.status(500).json({ error: "Failed to create placemark" });
+            return res.status(500).json({
+                success: false,
+                message: "Failed to create placemark",
+                data: null,
+                errors: ["Failed to create placemark"],
+            });
         }
     },
 
@@ -96,17 +138,42 @@ export const PlacemarkController = {
         const parsed = placemarkSchema.partial().safeParse(req.body);
         if (!parsed.success) {
             return res.status(422).json({
+                success: false,
+                message: "Validation failed",
+                data: null,
                 errors: parsed.error.issues.map((i) => i.message),
             });
         }
 
         try {
             const placemark = await container.placemarkService.update(user.id, req.params.id, parsed.data);
-            return res.json(placemark);
+            return res.json({
+                success: true,
+                message: "Placemark updated successfully",
+                data: {
+                    placemark,
+                },
+                errors: null,
+            });
         } catch (e: any) {
-            if (e.message === "FORBIDDEN") return res.status(403).json({ error: "Forbidden" });
-            if (e.message === "NOT_FOUND") return res.status(404).json({ error: "Not found" });
-            return res.status(500).json({ error: "Values incorrect or something went wrong" });
+            if (e.message === "FORBIDDEN") return res.status(403).json({
+                success: false,
+                message: "Forbidden",
+                data: null,
+                errors: ["Forbidden"],
+            });
+            if (e.message === "NOT_FOUND") return res.status(404).json({
+                success: false,
+                message: "Not found",
+                data: null,
+                errors: ["Not found"],
+            });
+            return res.status(500).json({
+                success: false,
+                message: "Values incorrect or something went wrong",
+                data: null,
+                errors: ["Values incorrect or something went wrong"],
+            });
         }
     },
 
@@ -116,11 +183,31 @@ export const PlacemarkController = {
 
         try {
             await container.placemarkService.delete(user.id, req.params.id);
-            return res.json({ message: "Deleted" });
+            return res.json({
+                success: true,
+                message: "Placemark deleted successfully",
+                data: null,
+                errors: null,
+            });
         } catch (e: any) {
-            if (e.message === "FORBIDDEN") return res.status(403).json({ error: "Forbidden" });
-            if (e.message === "NOT_FOUND") return res.status(404).json({ error: "Not found" });
-            return res.status(500).json({ error: "Something went wrong" });
+            if (e.message === "FORBIDDEN") return res.status(403).json({
+                success: false,
+                message: "Forbidden",
+                data: null,
+                errors: ["Forbidden"],
+            });
+            if (e.message === "NOT_FOUND") return res.status(404).json({
+                success: false,
+                message: "Not found",
+                data: null,
+                errors: ["Not found"],
+            });
+            return res.status(500).json({
+                success: false,
+                message: "Something went wrong",
+                data: null,
+                errors: ["Something went wrong"],
+            });
         }
     }
 }; 

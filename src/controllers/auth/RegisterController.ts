@@ -21,6 +21,9 @@ export default async function RegisterController(req: Request, res: Response) {
 
         if (!parsed.success) {
             return res.status(422).json({
+                success: false,
+                message: "Validation failed",
+                data: null,
                 errors: parsed.error.issues.map((i) => i.message),
             });
         }
@@ -28,18 +31,28 @@ export default async function RegisterController(req: Request, res: Response) {
         const user = await container.registerService.register(req.body);
 
         return res.json({
+            success: true,
             message: "Registered successfully.",
-            user,
+            data: {
+                user,
+            },
+            errors: null,
         });
     } catch (error: any) {
         if (error.message === "EMAIL_TAKEN") {
             return res.status(422).json({
+                success: false,
+                message: "Email is already in use",
+                data: null,
                 errors: ["Email is already in use"],
             });
         }
 
         return res.status(500).json({
-            error: error.message
+            success: false,
+            message: error.message || "Internal server error",
+            data: null,
+            errors: [error.message || "Internal server error"],
         });
     }
 }
