@@ -1,6 +1,6 @@
-import {PrismaClient} from "../../../generated/prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 import bcrypt from "bcrypt";
-import {generateAccessToken, generateRefreshToken} from "../../lib/jwt";
+import { generateAccessToken, generateRefreshToken } from "../../lib/jwt";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
@@ -14,8 +14,8 @@ export class LoginService {
         password: string;
     }) {
         const user = await this.db.user.findFirst({
-            where: {email: data.email},
-            include: {profile: true},
+            where: { email: data.email },
+            include: { profile: true },
         });
 
         if (!user) {
@@ -30,16 +30,20 @@ export class LoginService {
 
         delete (user as any).password;
 
+        const tokenOptions = user.role === "ADMIN" ? { expiresIn: "30m" } : {};
+
+        // Cast to any to bypass strict literal type check temporarily, or define SignOptions properly
         const access_token = generateAccessToken({
             id: user.id,
             email: user.email,
-        });
+            role: user.role
+        }, tokenOptions as any);
 
         const refresh_token = generateRefreshToken({
             id: user.id,
         });
 
-        const {jti} = jwt.decode(access_token) as any;
+        const { jti } = jwt.decode(access_token) as any;
 
         await this.db.refreshToken.create({
             data: {

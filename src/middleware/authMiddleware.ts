@@ -1,6 +1,6 @@
-import {NextFunction, Request, Response} from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import {PrismaClient} from "../../generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 
 interface AuthRequest extends Request {
     user?: { id: string; email: string };
@@ -16,7 +16,7 @@ export async function AuthMiddleware(
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        return res.status(401).json({errors: ["Unauthorized"]});
+        return res.status(401).json({ errors: ["Unauthorized"] });
     }
 
     const token = authHeader.split(" ")[1];
@@ -38,7 +38,7 @@ export async function AuthMiddleware(
             });
 
             if (revoked) {
-                return res.status(401).json({errors: ["Token expired"]});
+                return res.status(401).json({ errors: ["Token expired"] });
             }
         }
 
@@ -47,6 +47,6 @@ export async function AuthMiddleware(
         next();
 
     } catch (error) {
-        return res.status(401).json({errors: ["Invalid or expired token"]});
+        return res.status(401).json({ errors: ["Invalid or expired token"] });
     }
 }

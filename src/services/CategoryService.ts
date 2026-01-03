@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 
 /**
  * Service to handle Category operations.
@@ -21,8 +21,6 @@ export class CategoryService {
             }
         });
     }
-
-
 
     // Delete a category by ID
     async delete(id: string) {

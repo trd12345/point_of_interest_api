@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { RegisterService } from "../services/auth/RegisterService";
 import { MeService } from "../services/auth/MeService";
 import { LoginService } from "../services/auth/LoginService";
@@ -12,6 +12,7 @@ import { PlacemarkService } from "../services/PlacemarkService";
 import { ChangePasswordService } from "../services/auth/ChangePasswordService";
 import { GeocodingService } from "../services/GeocodingService";
 import { ImageService } from "../services/ImageService";
+
 
 class Container {
     prisma = new PrismaClient();

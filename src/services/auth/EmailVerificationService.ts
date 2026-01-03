@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import {PrismaClient} from "../../../generated/prisma/client";
+import { PrismaClient } from "../../generated/prisma/client";
 
 export class EmailVerificationService {
     constructor(private db: PrismaClient) {
@@ -8,9 +8,9 @@ export class EmailVerificationService {
     // As I understand here, it has verification token for the email link itself
     generateVerificationToken(userId: string, email: string) {
         return jwt.sign(
-            {id: userId, email},
+            { id: userId, email },
             process.env.JWT_SECRET as string,
-            {expiresIn: "1h"}
+            { expiresIn: "1h" }
         );
     }
 
@@ -27,15 +27,15 @@ export class EmailVerificationService {
         }
 
         const user = await this.db.user.findUnique({
-            where: {id: decoded.id}
+            where: { id: decoded.id }
         });
 
         if (!user) throw new Error("USER_NOT_FOUND");
         if (user.email_verified_at) throw new Error("ALREADY_VERIFIED");
 
         await this.db.user.update({
-            where: {id: decoded.id},
-            data: {email_verified_at: new Date()}
+            where: { id: decoded.id },
+            data: { email_verified_at: new Date() }
         });
 
         return true;
