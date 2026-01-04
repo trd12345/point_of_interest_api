@@ -22,7 +22,7 @@ export default async function ResetPasswordController(req: Request, res: Respons
                 success: false,
                 message: "Validation failed",
                 data: null,
-                errors: parsed.error.issues.map((i) => i.message),
+                errors: parsed.error.flatten().fieldErrors,
             });
         }
 
@@ -43,7 +43,7 @@ export default async function ResetPasswordController(req: Request, res: Respons
                 success: false,
                 message: "Invalid or expired token.",
                 data: null,
-                errors: ["Invalid or expired token."],
+                errors: { token: ["Invalid or expired token."] },
             });
         }
 
@@ -51,7 +51,7 @@ export default async function ResetPasswordController(req: Request, res: Respons
             success: false,
             message: "An error occurred while processing your request.",
             data: null,
-            errors: ["An error occurred while processing your request."],
+            errors: { general: ["An error occurred while processing your request."] },
         });
     }
 } 

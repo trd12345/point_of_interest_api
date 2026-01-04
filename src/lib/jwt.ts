@@ -10,6 +10,7 @@ const refreshExpires = (process.env.JWT_REFRESH_EXPIRES_IN ?? "7d") as jwt.SignO
 interface JwtPayload {
     id: string;
     email: string;
+    role: string | null;
 }
 
 export function generateAccessToken(payload: any, options?: SignOptions) {
@@ -33,9 +34,13 @@ export function passwordToken(payload: { userId: string, email: string }) {
     return jwt.sign(payload, refreshSecret, { expiresIn: refreshExpires });
 }
 
+export function emailChangeToken(payload: { userId: string, newEmail: string }) {
+    return jwt.sign(payload, accessSecret, { expiresIn: "1h" });
+}
+
 export function refreshAccessToken(payload: JwtPayload) {
     const options: SignOptions = {
-        expiresIn: (process.env.JWT_ACCESS_EXPIRES_IN as "15m") || "15m",
+        expiresIn: (process.env.JWT_ACCESS_EXPIRES_IN as any) || "15m",
     };
 
     return jwt.sign(

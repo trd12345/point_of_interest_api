@@ -19,15 +19,22 @@ export class RefreshTokenService {
         try {
             decoded = jwt.verify(refreshToken, process.env.JWT_SECRET as string) as {
                 id: string;
-                email: string;
             };
         } catch {
             throw new Error("INVALID_REFRESH_TOKEN");
         }
 
-        const newRefresh = refreshRefreshToken({ id: decoded.id, email: decoded.email });
+        const user = await this.db.user.findUnique({
+            where: { id: decoded.id }
+        });
 
-        const newAccess = refreshAccessToken({ id: decoded.id, email: decoded.email });
+        if (!user) {
+            throw new Error("INVALID_REFRESH_TOKEN");
+        }
+
+        const newRefresh = refreshRefreshToken({ id: user.id, email: user.email, role: user.role });
+
+        const newAccess = refreshAccessToken({ id: user.id, email: user.email, role: user.role });
 
         const { jti } = jwt.decode(newAccess) as any;
 

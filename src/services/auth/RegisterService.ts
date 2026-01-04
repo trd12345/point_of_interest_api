@@ -42,7 +42,8 @@ export class RegisterService {
                     user.email
                 );
 
-            const verificationUrl = `${process.env.APP_URL}/auth/verify-email?token=${verificationToken}`;
+            const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+            const verificationUrl = `${frontendUrl}/auth/verify-email?token=${verificationToken}`;
 
             await sendMail(
                 user.email,
