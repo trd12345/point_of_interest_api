@@ -22,6 +22,10 @@ export class LoginService {
             throw new Error("INVALID_CREDENTIALS");
         }
 
+        if (!user.email_verified_at) {
+            throw new Error("EMAIL_NOT_VERIFIED");
+        }
+
         const valid = await bcrypt.compare(data.password, user.password);
 
         if (!valid) {
