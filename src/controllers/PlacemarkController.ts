@@ -13,27 +13,46 @@ const placemarkSchema = z.object({
     country: z.string().min(1),
     lat: z.number().optional(),
     lng: z.number().optional(),
-    is_public: z.boolean().optional()
+    is_public: z.preprocess((val) => val === "true" || val === true, z.boolean()).optional()
 });
 
 export const PlacemarkController = {
     // Get all placemarks
     getAll: async (req: Request, res: Response) => {
-        const placemarks = await container.placemarkService.getAll();
-        return res.json({
-            success: true,
-            message: "Placemarks retrieved successfully",
-            data: {
-                placemarks,
-            },
-            errors: null,
-        });
+        try {
+            const placemarks = await container.placemarkService.getAll();
+            return res.json({
+                success: true,
+                message: "Placemarks retrieved successfully",
+                data: {
+                    placemarks,
+                },
+                errors: null,
+            });
+        } catch (e) {
+            console.error(e);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch placemarks",
+                data: null,
+                errors: ["Something went wrong"],
+            });
+        }
     },
 
     // Get a single placemark by ID
     getOne: async (req: Request, res: Response) => {
+        const user = (req as any).user;
         try {
-            const placemark = await container.placemarkService.getById(req.params.id);
+            const placemark = await container.placemarkService.getById(req.params.id, user?.id);
+            if (!placemark) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Placemark not found",
+                    data: null,
+                    errors: ["Placemark not found"],
+                });
+            }
             return res.json({
                 success: true,
                 message: "Placemark found",
@@ -145,8 +164,33 @@ export const PlacemarkController = {
             });
         }
 
+        // Image Upload Logic
+        let imageUrl: string | undefined;
+        if (req.file) {
+            try {
+                imageUrl = await container.imageService.uploadImage(req.file.buffer);
+            } catch (error) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Image upload failed",
+                    data: null,
+                    errors: ["Image upload failed"],
+                });
+            }
+        }
+
         try {
-            const placemark = await container.placemarkService.update(user.id, req.params.id, parsed.data);
+            const updateData: any = {
+                ...parsed.data,
+            };
+
+            if (imageUrl) {
+                updateData.image_url = imageUrl;
+            } else if (req.body.removeImage === "true") {
+                updateData.image_url = null;
+            }
+
+            const placemark = await container.placemarkService.update(user.id, req.params.id, updateData);
             return res.json({
                 success: true,
                 message: "Placemark updated successfully",
@@ -182,7 +226,7 @@ export const PlacemarkController = {
         const user = (req as any).user;
 
         try {
-            await container.placemarkService.delete(user.id, req.params.id);
+            await container.placemarkService.delete(user.id, req.params.id, user.role === "ADMIN");
             return res.json({
                 success: true,
                 message: "Placemark deleted successfully",

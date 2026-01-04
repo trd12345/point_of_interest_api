@@ -22,12 +22,10 @@ export class PlacemarkService {
         });
     }
 
-    // Get a specific placemark by ID and increment analytics view count
-    async getById(id: string) {
-        // Increment view count atomically
-        const placemark = await this.db.placemark.update({
+    // Get a specific placemark by ID and optionally increment view count
+    async getById(id: string, viewerId?: string) {
+        const placemark = await this.db.placemark.findUnique({
             where: { id },
-            data: { view_count: { increment: 1 } },
             include: {
                 user: {
                     select: {
@@ -49,6 +47,37 @@ export class PlacemarkService {
                 }
             }
         });
+
+        if (!placemark) return null;
+
+        // Only increment if viewer is not the owner
+        if (viewerId !== placemark.userId) {
+            return await this.db.placemark.update({
+                where: { id },
+                data: { view_count: { increment: 1 } },
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            profile: {
+                                select: {
+                                    first_name: true,
+                                    last_name: true
+                                }
+                            }
+                        }
+                    },
+                    category: {
+                        select: {
+                            id: true,
+                            name: true,
+                            description: true
+                        }
+                    }
+                }
+            });
+        }
+
         return placemark;
     }
 
@@ -87,6 +116,7 @@ export class PlacemarkService {
         country: string;
         lat: number;
         lng: number;
+        image_url?: string | null;
         is_public?: boolean;
     }>) {
         // Ensure ownership
@@ -100,12 +130,13 @@ export class PlacemarkService {
         });
     }
 
-    // Delete a placemark (only if owned by the user)
-    async delete(userId: string, placemarkId: string) {
+    // Delete a placemark (only if owned by the user or admin)
+    async delete(userId: string, placemarkId: string, isAdmin: boolean = false) {
         // Ensure ownership
         const placemark = await this.db.placemark.findUnique({ where: { id: placemarkId } });
         if (!placemark) throw new Error("NOT_FOUND");
-        if (placemark.userId !== userId) throw new Error("FORBIDDEN");
+
+        if (!isAdmin && placemark.userId !== userId) throw new Error("FORBIDDEN");
 
         return this.db.placemark.delete({
             where: { id: placemarkId }

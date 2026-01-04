@@ -1,9 +1,9 @@
-import {Request, Response} from "express";
-import {container} from "../../lib/container";
+import { Request, Response } from "express";
+import { container } from "../../lib/container";
 
 export default async function LoginController(req: Request, res: Response) {
     try {
-        const result= await container.loginService.login(req.body);
+        const result = await container.loginService.login(req.body);
         const isProduction = process.env.APP_ENV === "production";
 
         res.cookie("refresh_token", result.refresh_token, {
@@ -30,7 +30,16 @@ export default async function LoginController(req: Request, res: Response) {
                 success: false,
                 message: "Failed to login",
                 data: null,
-                errors: ["Invalid credentials"],
+                errors: { general: ["Invalid credentials"] },
+            });
+        }
+
+        if (error instanceof Error && error.message === "EMAIL_NOT_VERIFIED") {
+            return res.status(400).json({
+                success: false,
+                message: "Failed to login",
+                data: null,
+                errors: { general: ["Email is not verified"] },
             });
         }
 
@@ -38,7 +47,7 @@ export default async function LoginController(req: Request, res: Response) {
             success: false,
             message: "Internal Server Error",
             data: null,
-            errors: ["Internal Server Error"],
+            errors: { general: ["Internal Server Error"] },
         });
     }
 }

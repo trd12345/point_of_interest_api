@@ -28,7 +28,8 @@ export class ForgotPasswordService {
             }
         });
 
-        const resetLink = `${process.env.APP_URL}/auth/reset-password?token=${token}`;
+        const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+        const resetLink = `${frontendUrl}/reset-password?token=${token}`;
 
         await sendMail(
             user.email,

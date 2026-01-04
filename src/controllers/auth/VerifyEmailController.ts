@@ -1,16 +1,16 @@
-import {Request, Response} from "express";
-import {container} from "../../lib/container";
+import { Request, Response } from "express";
+import { container } from "../../lib/container";
 
 export default async function VerifyEmailController(req: Request, res: Response) {
     try {
-        const {token} = req.query;
+        const { token } = req.query;
 
         if (!token) {
             return res.status(422).json({
                 success: false,
                 message: "Verification token missing",
                 data: null,
-                errors: ["Verification token missing"],
+                errors: { token: ["Verification token missing"] },
             });
         }
 
@@ -31,7 +31,7 @@ export default async function VerifyEmailController(req: Request, res: Response)
                 success: false,
                 message: "Invalid or expired token",
                 data: null,
-                errors: ["Invalid or expired token"],
+                errors: { token: ["Invalid or expired token"] },
             });
 
         if (msg === "ALREADY_VERIFIED")
@@ -39,7 +39,7 @@ export default async function VerifyEmailController(req: Request, res: Response)
                 success: false,
                 message: "Email already verified",
                 data: null,
-                errors: ["Email already verified"],
+                errors: { general: ["Email already verified"] },
             });
 
         if (msg === "USER_NOT_FOUND")
@@ -47,14 +47,14 @@ export default async function VerifyEmailController(req: Request, res: Response)
                 success: false,
                 message: "User not found",
                 data: null,
-                errors: ["User not found"],
+                errors: { general: ["User not found"] },
             });
-        
+
         return res.status(500).json({
             success: false,
             message: "Something went wrong",
             data: null,
-            errors: ["Something went wrong"],
+            errors: { general: ["Something went wrong"] },
         });
     }
 }

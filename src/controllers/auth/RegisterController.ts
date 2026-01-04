@@ -1,6 +1,6 @@
-import {Request, Response} from "express";
-import {z} from "zod";
-import {container} from "../../lib/container";
+import { Request, Response } from "express";
+import { z } from "zod";
+import { container } from "../../lib/container";
 
 const registerSchema = z.object({
     first_name: z.string().min(2),
@@ -24,7 +24,7 @@ export default async function RegisterController(req: Request, res: Response) {
                 success: false,
                 message: "Validation failed",
                 data: null,
-                errors: parsed.error.issues.map((i) => i.message),
+                errors: parsed.error.flatten().fieldErrors,
             });
         }
 
@@ -44,7 +44,7 @@ export default async function RegisterController(req: Request, res: Response) {
                 success: false,
                 message: "Email is already in use",
                 data: null,
-                errors: ["Email is already in use"],
+                errors: { email: ["Email is already in use"] },
             });
         }
 
@@ -52,7 +52,7 @@ export default async function RegisterController(req: Request, res: Response) {
             success: false,
             message: error.message || "Internal server error",
             data: null,
-            errors: [error.message || "Internal server error"],
+            errors: { general: [error.message || "Internal server error"] },
         });
     }
 }

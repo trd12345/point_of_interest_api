@@ -281,7 +281,7 @@ export type UserCreateInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -297,7 +297,7 @@ export type UserUncheckedCreateInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -343,7 +343,7 @@ export type UserCreateManyInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -495,7 +495,7 @@ export type UserCreateWithoutProfileInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -510,7 +510,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -569,7 +569,7 @@ export type UserCreateWithoutRefreshTokenInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -584,7 +584,7 @@ export type UserUncheckedCreateWithoutRefreshTokenInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -643,7 +643,7 @@ export type UserCreateWithoutPasswordResetInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -658,7 +658,7 @@ export type UserUncheckedCreateWithoutPasswordResetInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -717,7 +717,7 @@ export type UserCreateWithoutCategoryInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -732,7 +732,7 @@ export type UserUncheckedCreateWithoutCategoryInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -791,7 +791,7 @@ export type UserCreateWithoutPlacemarkInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -806,7 +806,7 @@ export type UserUncheckedCreateWithoutPlacemarkInput = {
   email: string
   email_verified_at?: Date | string | null
   password: string
-  role: string
+  role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string

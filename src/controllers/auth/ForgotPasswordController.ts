@@ -16,7 +16,7 @@ export async function ForgotPasswordController(req: Request, res: Response) {
                 success: false,
                 message: "Validation failed",
                 data: null,
-                errors: parsed.error.issues.map((i) => i.message),
+                errors: parsed.error.flatten().fieldErrors,
             });
         }
         // 3. Call forgot password service
@@ -36,7 +36,7 @@ export async function ForgotPasswordController(req: Request, res: Response) {
                 success: false,
                 message: "User not found",
                 data: null,
-                errors: ["User not found"],
+                errors: { email: ["User with this email not found"] },
             });
         }
         // When error is not expected
@@ -45,7 +45,7 @@ export async function ForgotPasswordController(req: Request, res: Response) {
             success: false,
             message: "Something went wrong",
             data: null,
-            errors: ["Something went wrong"],
+            errors: { general: ["Something went wrong"] },
         });
     }
 }

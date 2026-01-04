@@ -11,6 +11,7 @@ import { PlacemarkService } from "../services/PlacemarkService";
 import { ChangePasswordService } from "../services/auth/ChangePasswordService";
 import { GeocodingService } from "../services/GeocodingService";
 import { ImageService } from "../services/ImageService";
+import { AdminService } from "../services/AdminService";
 import { PrismaClient } from "../generated/prisma/client";
 
 
@@ -28,6 +29,7 @@ class Container {
     categoryService = new CategoryService(this.prisma);
     placemarkService = new PlacemarkService(this.prisma);
     changePasswordService = new ChangePasswordService(this.prisma);
+    adminService = new AdminService(this.prisma);
     geocodingService = new GeocodingService();
     imageService = new ImageService();
 }

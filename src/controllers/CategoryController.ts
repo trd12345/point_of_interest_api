@@ -10,15 +10,25 @@ const createCategorySchema = z.object({
 export const CategoryController = {
     // Handler to get all categories
     getAll: async (req: Request, res: Response) => {
-        const categories = await container.categoryService.getAll();
-        return res.json({
-            success: true,
-            message: "Categories retrieved successfully",
-            data: {
-                categories,
-            },
-            errors: null,
-        });
+        try {
+            const categories = await container.categoryService.getAll();
+            return res.json({
+                success: true,
+                message: "Categories retrieved successfully",
+                data: {
+                    categories,
+                },
+                errors: null,
+            });
+        } catch (e) {
+            console.error(e);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch categories",
+                data: null,
+                errors: ["Something went wrong"],
+            });
+        }
     },
 
     // Handler to create a new category
@@ -59,6 +69,35 @@ export const CategoryController = {
                 message: "Failed to create category",
                 data: null,
                 errors: ["Failed to create category"],
+            });
+        }
+    },
+
+    // Handler to delete a category
+    delete: async (req: Request, res: Response) => {
+        const user = (req as any).user;
+        if (user.role !== "ADMIN") return res.status(403).json({
+            success: false,
+            message: "Forbidden",
+            data: null,
+            errors: ["Unauthorized"],
+        });
+
+        try {
+            await container.categoryService.delete(req.params.id);
+            return res.json({
+                success: true,
+                message: "Category deleted successfully",
+                data: null,
+                errors: null,
+            });
+        } catch (e) {
+            console.error(e);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to delete category",
+                data: null,
+                errors: ["Failed to delete category"],
             });
         }
     }

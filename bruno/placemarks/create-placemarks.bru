@@ -6,8 +6,21 @@ meta {
 
 post {
   url: 127.0.0.1:3000/placemarks
-  body: none
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "name" : "Steine Brücke",
+    "description" : "The bridge",
+    "categoryId" : "69540138ec3b3928dc5a9fd6", 
+    "street" : "Steinerne Brücke",
+    "house_number": "1",
+    "zip" : "93059",
+    "city" : "Regensburg",
+    "country" : "Germany"
+  }
 }
 
 settings {
