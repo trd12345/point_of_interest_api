@@ -9,7 +9,7 @@ export const GoogleOAuthController = {
      */
     googleAuth: async (req: Request, res: Response) => {
         try {
-            const { token } = req.body;
+            const { token, intent } = req.body;
 
             if (!token) {
                 return res.status(400).json({
@@ -20,11 +20,20 @@ export const GoogleOAuthController = {
                 });
             }
 
+            if (!intent || !['login', 'register'].includes(intent)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Authentication intent (login or register) is required',
+                    data: null,
+                    errors: { intent: ['Valid intent is required'] },
+                });
+            }
+
             // Verify Google token and get user info
             const googleProfile = await container.googleOAuthService.verifyGoogleToken(token);
 
-            // Find or create user
-            const user = await container.googleOAuthService.findOrCreateGoogleUser(googleProfile);
+            // Find or create user based on intent
+            const user = await container.googleOAuthService.handleGoogleAuth(googleProfile, intent);
 
             // Generate JWT token
             const jwtSecret = process.env.JWT_SECRET;

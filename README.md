@@ -19,7 +19,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 npm test
 ```
 
-# Run Server
+## Run Server
 ```bash
 npm run dev
 ```

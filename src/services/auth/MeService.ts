@@ -122,17 +122,19 @@ export class MeService {
     async deleteAccount(userId: string) {
         // Transactional delete to ensure clean cleanup
         await this.db.$transaction(async (tx) => {
-            // 1. Delete Refresh Tokens
-            await tx.refreshToken.deleteMany({ where: { userId } });
+            // Some models might not have perfect cascade or need manual cleanup
+            // 1. Delete OAuth Account if exists
+            await tx.oAuthAccount.deleteMany({ where: { userId } });
 
-            // 2. Delete Password Reset Tokens
-            await tx.passwordReset.deleteMany({ where: { userId } });
+            // 2. Delete Profile
+            await tx.profile.deleteMany({ where: { userId } });
 
-            // 3. Delete Profile
-            await tx.profile.delete({ where: { userId } });
-
-            // 4. Delete Placemarks (Or could set userId to null if nullable)
-            await tx.placemark.deleteMany({ where: { userId } });
+            // The rest are handled by onDelete: Cascade in schema.prisma:
+            // - RefreshToken
+            // - PasswordReset
+            // - Placemark
+            // - Category
+            // - Review (User relation)
 
             // 5. Delete User
             await tx.user.delete({ where: { id: userId } });

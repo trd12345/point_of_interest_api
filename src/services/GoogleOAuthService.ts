@@ -42,20 +42,46 @@ export class GoogleOAuthService {
     }
 
     /**
-     * Find or create user from Google OAuth
+     * Handle Google OAuth based on intent (login or register)
      */
-    async findOrCreateGoogleUser(googleProfile: {
+    async handleGoogleAuth(googleProfile: {
         googleId: string;
         email: string;
         emailVerified: boolean;
         firstName: string;
         lastName: string;
-    }) {
-        let user = await this.db.user.findFirst({
+    }, intent: 'login' | 'register') {
+        const user = await this.findGoogleUser(googleProfile.googleId);
+
+        if (intent === 'login') {
+            if (!user) {
+                throw new Error('Invalid credentials');
+            }
+            return user;
+        }
+
+        if (intent === 'register') {
+            if (user) {
+                // User already exists, if they are trying to register again, treat it as a login
+                // or we could throw an error saying "Account already exists". 
+                // Given the requirement, returning the user is probably safer and friendlier.
+                return user;
+            }
+            return this.registerGoogleUser(googleProfile);
+        }
+
+        throw new Error('Invalid authentication intent');
+    }
+
+    /**
+     * Find existing Google user
+     */
+    private async findGoogleUser(googleId: string) {
+        return this.db.user.findFirst({
             where: {
                 oauthAccount: {
                     provider: 'google',
-                    providerId: googleProfile.googleId,
+                    providerId: googleId,
                 }
             },
             include: {
@@ -63,11 +89,18 @@ export class GoogleOAuthService {
                 oauthAccount: true
             },
         });
+    }
 
-        if (user) {
-            return user;
-        }
-
+    /**
+     * Create new user from Google profile
+     */
+    private async registerGoogleUser(googleProfile: {
+        googleId: string;
+        email: string;
+        emailVerified: boolean;
+        firstName: string;
+        lastName: string;
+    }) {
         // Check if user exists with this email (from email/password auth)
         const existingEmailUser = await this.db.user.findUnique({
             where: { email: googleProfile.email },
@@ -80,7 +113,7 @@ export class GoogleOAuthService {
             );
         }
 
-        user = await this.db.user.create({
+        const user = await this.db.user.create({
             data: {
                 email: googleProfile.email,
                 email_verified_at: googleProfile.emailVerified ? new Date() : null,

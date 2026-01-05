@@ -17,57 +17,20 @@ export class AdminService {
 
     async deleteUser(userId: string) {
         return this.db.$transaction(async (tx) => {
-            // 1. Delete Refresh Tokens
-            await tx.refreshToken.deleteMany({ where: { userId } });
+            // 1. Delete OAuth Account
+            await tx.oAuthAccount.deleteMany({ where: { userId } });
 
-            // 2. Delete Password Reset Tokens
-            await tx.passwordReset.deleteMany({ where: { userId } });
-
-            // 3. Get all placemarks owned by this user
-            const userPlacemarks = await tx.placemark.findMany({
-                where: { userId },
-                select: { id: true }
-            });
-            const placemarkIds = userPlacemarks.map(p => p.id);
-
-            // 4. Delete all review replies (child reviews) on those placemarks first
-            if (placemarkIds.length > 0) {
-                await tx.review.deleteMany({
-                    where: {
-                        placemarkId: { in: placemarkIds },
-                        parentId: { not: null }
-                    }
-                });
-
-                // 5. Delete all parent reviews on those placemarks
-                await tx.review.deleteMany({
-                    where: {
-                        placemarkId: { in: placemarkIds }
-                    }
-                });
-            }
-
-            // 6. Delete review replies created by this user
-            await tx.review.deleteMany({
-                where: {
-                    userId,
-                    parentId: { not: null }
-                }
-            });
-
-            // 7. Delete reviews created by this user
-            await tx.review.deleteMany({ where: { userId } });
-
-            // 8. Delete Placemarks
-            await tx.placemark.deleteMany({ where: { userId } });
-
-            // 9. Delete Categories
-            await tx.category.deleteMany({ where: { userId } });
-
-            // 10. Delete Profile
+            // 2. Delete Profile
             await tx.profile.deleteMany({ where: { userId } });
 
-            // 11. Delete User
+            // 3. Delete related data that might have complex relations or need manual handling
+            // NOTE: Most of these are now handled by onDelete: Cascade in schema.prisma,
+            // but we keep some manual steps for safety or specific logic if needed.
+
+            // Example: If we want to delete reviews specifically before the user,
+            // although onDelete: Cascade on Review.user will handle it.
+
+            // 4. Delete User (This triggers cascades for RefreshToken, PasswordReset, Placemark, Category, Review)
             return tx.user.delete({ where: { id: userId } });
         });
     }
