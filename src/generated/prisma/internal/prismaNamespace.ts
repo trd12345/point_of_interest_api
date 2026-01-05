@@ -391,6 +391,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  OAuthAccount: 'OAuthAccount',
   Profile: 'Profile',
   RefreshToken: 'RefreshToken',
   PasswordReset: 'PasswordReset',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "profile" | "refreshToken" | "passwordReset" | "category" | "placemark" | "review"
+    modelProps: "user" | "oAuthAccount" | "profile" | "refreshToken" | "passwordReset" | "category" | "placemark" | "review"
     txIsolationLevel: never
   }
   model: {
@@ -487,6 +488,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    OAuthAccount: {
+      payload: Prisma.$OAuthAccountPayload<ExtArgs>
+      fields: Prisma.OAuthAccountFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.OAuthAccountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.OAuthAccountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+        }
+        findFirst: {
+          args: Prisma.OAuthAccountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.OAuthAccountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+        }
+        findMany: {
+          args: Prisma.OAuthAccountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>[]
+        }
+        create: {
+          args: Prisma.OAuthAccountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+        }
+        createMany: {
+          args: Prisma.OAuthAccountCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.OAuthAccountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+        }
+        update: {
+          args: Prisma.OAuthAccountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+        }
+        deleteMany: {
+          args: Prisma.OAuthAccountDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.OAuthAccountUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.OAuthAccountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OAuthAccountPayload>
+        }
+        aggregate: {
+          args: Prisma.OAuthAccountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOAuthAccount>
+        }
+        groupBy: {
+          args: Prisma.OAuthAccountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OAuthAccountGroupByOutputType>[]
+        }
+        findRaw: {
+          args: Prisma.OAuthAccountFindRawArgs<ExtArgs>
+          result: Prisma.JsonObject
+        }
+        aggregateRaw: {
+          args: Prisma.OAuthAccountAggregateRawArgs<ExtArgs>
+          result: Prisma.JsonObject
+        }
+        count: {
+          args: Prisma.OAuthAccountCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OAuthAccountCountAggregateOutputType> | number
         }
       }
     }
@@ -959,12 +1034,22 @@ export const UserScalarFieldEnum = {
   role: 'role',
   last_login: 'last_login',
   created_at: 'created_at',
-  updated_at: 'updated_at',
-  oauth_provider: 'oauth_provider',
-  oauth_id: 'oauth_id'
+  updated_at: 'updated_at'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const OAuthAccountScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  providerId: 'providerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type OAuthAccountScalarFieldEnum = (typeof OAuthAccountScalarFieldEnum)[keyof typeof OAuthAccountScalarFieldEnum]
 
 
 export const ProfileScalarFieldEnum = {
@@ -1224,6 +1309,7 @@ export interface PrismaClientOptions {
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  oAuthAccount?: Prisma.OAuthAccountOmit
   profile?: Prisma.ProfileOmit
   refreshToken?: Prisma.RefreshTokenOmit
   passwordReset?: Prisma.PasswordResetOmit

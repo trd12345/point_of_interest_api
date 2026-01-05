@@ -51,13 +51,17 @@ export class GoogleOAuthService {
         firstName: string;
         lastName: string;
     }) {
-        // Check if user exists with this Google ID
         let user = await this.db.user.findFirst({
             where: {
-                oauth_provider: 'google',
-                oauth_id: googleProfile.googleId,
+                oauthAccount: {
+                    provider: 'google',
+                    providerId: googleProfile.googleId,
+                }
             },
-            include: { profile: true },
+            include: {
+                profile: true,
+                oauthAccount: true
+            },
         });
 
         if (user) {
@@ -76,14 +80,17 @@ export class GoogleOAuthService {
             );
         }
 
-        // Create new user with Google OAuth
         user = await this.db.user.create({
             data: {
                 email: googleProfile.email,
                 email_verified_at: googleProfile.emailVerified ? new Date() : null,
                 password: null, // No password for OAuth users
-                oauth_provider: 'google',
-                oauth_id: googleProfile.googleId,
+                oauthAccount: {
+                    create: {
+                        provider: 'google',
+                        providerId: googleProfile.googleId,
+                    }
+                },
                 role: 'USER',
                 profile: {
                     create: {
@@ -92,7 +99,10 @@ export class GoogleOAuthService {
                     },
                 },
             },
-            include: { profile: true },
+            include: {
+                profile: true,
+                oauthAccount: true
+            },
         });
 
         return user;

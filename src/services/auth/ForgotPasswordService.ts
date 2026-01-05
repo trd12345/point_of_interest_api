@@ -9,14 +9,17 @@ export class ForgotPasswordService {
     async forgotPassword(data: { email: string }) {
         const user = await this.db.user.findUnique({
             where: { email: data.email },
-            include: { profile: true }
+            include: {
+                profile: true,
+                oauthAccount: true
+            }
         });
 
         if (!user) {
             throw new Error("USER_NOT_FOUND");
         }
 
-        if (user.oauth_provider === 'google') {
+        if (user.oauthAccount) {
             throw new Error("GOOGLE_ACCOUNT_ERROR");
         }
 

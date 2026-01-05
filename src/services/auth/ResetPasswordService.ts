@@ -30,10 +30,11 @@ export class ResetPasswordService {
 
         // 3. Get user and check if they are a Google user
         const user = await this.db.user.findUnique({
-            where: { id: decoded.userId }
+            where: { id: decoded.userId },
+            include: { oauthAccount: true }
         });
 
-        if (user?.oauth_provider === 'google') {
+        if (user?.oauthAccount) {
             throw new Error("GOOGLE_ACCOUNT_ERROR");
         }
 

@@ -15,7 +15,10 @@ export class LoginService {
     }) {
         const user = await this.db.user.findFirst({
             where: { email: data.email },
-            include: { profile: true },
+            include: {
+                profile: true,
+                oauthAccount: true
+            },
         });
 
         if (!user) {
@@ -59,7 +62,11 @@ export class LoginService {
         });
 
         return {
-            user,
+            user: {
+                ...user,
+                oauth_provider: user.oauthAccount?.provider || null,
+                oauth_id: user.oauthAccount?.providerId || null
+            },
             access_token,
             refresh_token,
         };

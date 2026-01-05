@@ -11,13 +11,21 @@ export class MeService {
     async getMe(id: string) {
         const user = await this.db.user.findUnique({
             where: { id },
-            include: { profile: true },
+            include: {
+                profile: true,
+                oauthAccount: true
+            },
             omit: { password: true }
         });
 
         if (!user) throw new Error("USER_NOT_FOUND");
 
-        return user;
+        // Map for frontend compatibility
+        return {
+            ...user,
+            oauth_provider: user.oauthAccount?.provider || null,
+            oauth_id: user.oauthAccount?.providerId || null
+        };
     }
 
     async updateProfile(userId: string, data: { email: string; firstName: string; lastName: string; contactEmail?: string; contactPhone?: string }) {

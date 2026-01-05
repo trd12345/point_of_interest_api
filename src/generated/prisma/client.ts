@@ -48,6 +48,11 @@ path.join(process.cwd(), "src/generated/prisma/libquery_engine-darwin-arm64.dyli
  */
 export type User = Prisma.UserModel
 /**
+ * Model OAuthAccount
+ * 
+ */
+export type OAuthAccount = Prisma.OAuthAccountModel
+/**
  * Model Profile
  * 
  */
