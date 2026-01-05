@@ -33,6 +33,8 @@ export type UserMinAggregateOutputType = {
   last_login: Date | null
   created_at: Date | null
   updated_at: Date | null
+  oauth_provider: string | null
+  oauth_id: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -44,6 +46,8 @@ export type UserMaxAggregateOutputType = {
   last_login: Date | null
   created_at: Date | null
   updated_at: Date | null
+  oauth_provider: string | null
+  oauth_id: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -55,6 +59,8 @@ export type UserCountAggregateOutputType = {
   last_login: number
   created_at: number
   updated_at: number
+  oauth_provider: number
+  oauth_id: number
   _all: number
 }
 
@@ -68,6 +74,8 @@ export type UserMinAggregateInputType = {
   last_login?: true
   created_at?: true
   updated_at?: true
+  oauth_provider?: true
+  oauth_id?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -79,6 +87,8 @@ export type UserMaxAggregateInputType = {
   last_login?: true
   created_at?: true
   updated_at?: true
+  oauth_provider?: true
+  oauth_id?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -90,6 +100,8 @@ export type UserCountAggregateInputType = {
   last_login?: true
   created_at?: true
   updated_at?: true
+  oauth_provider?: true
+  oauth_id?: true
   _all?: true
 }
 
@@ -169,11 +181,13 @@ export type UserGroupByOutputType = {
   id: string
   email: string
   email_verified_at: Date | null
-  password: string
+  password: string | null
   role: string
   last_login: Date | null
   created_at: Date
   updated_at: Date
+  oauth_provider: string | null
+  oauth_id: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -201,11 +215,13 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   email_verified_at?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  password?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.StringFilter<"User"> | string
   last_login?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
+  oauth_provider?: Prisma.StringNullableFilter<"User"> | string | null
+  oauth_id?: Prisma.StringNullableFilter<"User"> | string | null
   profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   RefreshToken?: Prisma.RefreshTokenListRelationFilter
   PasswordReset?: Prisma.PasswordResetListRelationFilter
@@ -223,6 +239,8 @@ export type UserOrderByWithRelationInput = {
   last_login?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  oauth_provider?: Prisma.SortOrder
+  oauth_id?: Prisma.SortOrder
   profile?: Prisma.ProfileOrderByWithRelationInput
   RefreshToken?: Prisma.RefreshTokenOrderByRelationAggregateInput
   PasswordReset?: Prisma.PasswordResetOrderByRelationAggregateInput
@@ -234,22 +252,25 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  oauth_provider_oauth_id?: Prisma.UserOauth_providerOauth_idCompoundUniqueInput
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   email_verified_at?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  password?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.StringFilter<"User"> | string
   last_login?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
+  oauth_provider?: Prisma.StringNullableFilter<"User"> | string | null
+  oauth_id?: Prisma.StringNullableFilter<"User"> | string | null
   profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   RefreshToken?: Prisma.RefreshTokenListRelationFilter
   PasswordReset?: Prisma.PasswordResetListRelationFilter
   Placemark?: Prisma.PlacemarkListRelationFilter
   Category?: Prisma.CategoryListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "oauth_provider_oauth_id">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -260,6 +281,8 @@ export type UserOrderByWithAggregationInput = {
   last_login?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  oauth_provider?: Prisma.SortOrder
+  oauth_id?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -272,22 +295,26 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   email_verified_at?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
   last_login?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  oauth_provider?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  oauth_id?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
@@ -300,11 +327,13 @@ export type UserUncheckedCreateInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
@@ -316,11 +345,13 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
@@ -332,11 +363,13 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
@@ -349,31 +382,42 @@ export type UserCreateManyInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type UserOauth_providerOauth_idCompoundUniqueInput = {
+  oauth_provider: string
+  oauth_id: string
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -385,6 +429,8 @@ export type UserCountOrderByAggregateInput = {
   last_login?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  oauth_provider?: Prisma.SortOrder
+  oauth_id?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -396,6 +442,8 @@ export type UserMaxOrderByAggregateInput = {
   last_login?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  oauth_provider?: Prisma.SortOrder
+  oauth_id?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -407,6 +455,8 @@ export type UserMinOrderByAggregateInput = {
   last_login?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  oauth_provider?: Prisma.SortOrder
+  oauth_id?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -420,6 +470,11 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+  unset?: boolean
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
   unset?: boolean
 }
 
@@ -515,11 +570,13 @@ export type UserCreateWithoutProfileInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
@@ -531,11 +588,13 @@ export type UserUncheckedCreateWithoutProfileInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
@@ -562,11 +621,13 @@ export type UserUpdateToOneWithWhereWithoutProfileInput = {
 export type UserUpdateWithoutProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
@@ -577,11 +638,13 @@ export type UserUpdateWithoutProfileInput = {
 export type UserUncheckedUpdateWithoutProfileInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
@@ -593,11 +656,13 @@ export type UserCreateWithoutRefreshTokenInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
@@ -609,11 +674,13 @@ export type UserUncheckedCreateWithoutRefreshTokenInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
@@ -640,11 +707,13 @@ export type UserUpdateToOneWithWhereWithoutRefreshTokenInput = {
 export type UserUpdateWithoutRefreshTokenInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
@@ -655,11 +724,13 @@ export type UserUpdateWithoutRefreshTokenInput = {
 export type UserUncheckedUpdateWithoutRefreshTokenInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
@@ -671,11 +742,13 @@ export type UserCreateWithoutPasswordResetInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
@@ -687,11 +760,13 @@ export type UserUncheckedCreateWithoutPasswordResetInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
@@ -718,11 +793,13 @@ export type UserUpdateToOneWithWhereWithoutPasswordResetInput = {
 export type UserUpdateWithoutPasswordResetInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
@@ -733,11 +810,13 @@ export type UserUpdateWithoutPasswordResetInput = {
 export type UserUncheckedUpdateWithoutPasswordResetInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
@@ -749,11 +828,13 @@ export type UserCreateWithoutCategoryInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
@@ -765,11 +846,13 @@ export type UserUncheckedCreateWithoutCategoryInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
@@ -796,11 +879,13 @@ export type UserUpdateToOneWithWhereWithoutCategoryInput = {
 export type UserUpdateWithoutCategoryInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
@@ -811,11 +896,13 @@ export type UserUpdateWithoutCategoryInput = {
 export type UserUncheckedUpdateWithoutCategoryInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
@@ -827,11 +914,13 @@ export type UserCreateWithoutPlacemarkInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
@@ -843,11 +932,13 @@ export type UserUncheckedCreateWithoutPlacemarkInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
@@ -874,11 +965,13 @@ export type UserUpdateToOneWithWhereWithoutPlacemarkInput = {
 export type UserUpdateWithoutPlacemarkInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
@@ -889,11 +982,13 @@ export type UserUpdateWithoutPlacemarkInput = {
 export type UserUncheckedUpdateWithoutPlacemarkInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
@@ -905,11 +1000,13 @@ export type UserCreateWithoutReviewsInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
@@ -921,11 +1018,13 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   id?: string
   email: string
   email_verified_at?: Date | string | null
-  password: string
+  password?: string | null
   role?: string
   last_login?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  oauth_provider?: string | null
+  oauth_id?: string | null
   profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
@@ -952,11 +1051,13 @@ export type UserUpdateToOneWithWhereWithoutReviewsInput = {
 export type UserUpdateWithoutReviewsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
@@ -967,11 +1068,13 @@ export type UserUpdateWithoutReviewsInput = {
 export type UserUncheckedUpdateWithoutReviewsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  password?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  oauth_provider?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oauth_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
@@ -1055,6 +1158,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   last_login?: boolean
   created_at?: boolean
   updated_at?: boolean
+  oauth_provider?: boolean
+  oauth_id?: boolean
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   RefreshToken?: boolean | Prisma.User$RefreshTokenArgs<ExtArgs>
   PasswordReset?: boolean | Prisma.User$PasswordResetArgs<ExtArgs>
@@ -1075,9 +1180,11 @@ export type UserSelectScalar = {
   last_login?: boolean
   created_at?: boolean
   updated_at?: boolean
+  oauth_provider?: boolean
+  oauth_id?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "email_verified_at" | "password" | "role" | "last_login" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "email_verified_at" | "password" | "role" | "last_login" | "created_at" | "updated_at" | "oauth_provider" | "oauth_id", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.User$profileArgs<ExtArgs>
   RefreshToken?: boolean | Prisma.User$RefreshTokenArgs<ExtArgs>
@@ -1102,11 +1209,13 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     email: string
     email_verified_at: Date | null
-    password: string
+    password: string | null
     role: string
     last_login: Date | null
     created_at: Date
     updated_at: Date
+    oauth_provider: string | null
+    oauth_id: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1513,6 +1622,8 @@ export interface UserFieldRefs {
   readonly last_login: Prisma.FieldRef<"User", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"User", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"User", 'DateTime'>
+  readonly oauth_provider: Prisma.FieldRef<"User", 'String'>
+  readonly oauth_id: Prisma.FieldRef<"User", 'String'>
 }
     
 

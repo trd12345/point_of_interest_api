@@ -19,7 +19,7 @@ export class ResetPasswordService {
             throw new Error("INVALID_OR_EXPIRED_TOKEN");
         }
 
-        // 2. Check if token exists in DB (to prevent reuse if we are tracking it)
+        // 2. Check if token exists in DB
         const storedToken = await this.db.passwordReset.findUnique({
             where: { token: data.token }
         });
@@ -28,10 +28,19 @@ export class ResetPasswordService {
             throw new Error("INVALID_OR_EXPIRED_TOKEN");
         }
 
-        // 3. Hash new password
+        // 3. Get user and check if they are a Google user
+        const user = await this.db.user.findUnique({
+            where: { id: decoded.userId }
+        });
+
+        if (user?.oauth_provider === 'google') {
+            throw new Error("GOOGLE_ACCOUNT_ERROR");
+        }
+
+        // 4. Hash new password
         const hashedPassword = await bcrypt.hash(data.password, 10);
 
-        // 4. Update User password and Delete used token
+        // 5. Update User password and Delete used token
         // Use transaction to ensure atomicity
         await this.db.$transaction([
             this.db.user.update({

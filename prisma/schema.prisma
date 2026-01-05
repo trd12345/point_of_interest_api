@@ -18,11 +18,15 @@ model User {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   email             String    @unique
   email_verified_at DateTime?
-  password          String
+  password          String? // Made optional for OAuth users
   role              String    @default("USER")
   last_login        DateTime?
   created_at        DateTime  @default(now())
   updated_at        DateTime  @updatedAt
+
+  // OAuth fields
+  oauth_provider String? // "google" or null for email/password
+  oauth_id       String? // Google user ID
 
   profile       Profile?
   RefreshToken  RefreshToken[]
@@ -30,6 +34,8 @@ model User {
   Placemark     Placemark[]
   Category      Category[]
   reviews       Review[]
+
+  @@unique([oauth_provider, oauth_id])
 }
 
 model Profile {

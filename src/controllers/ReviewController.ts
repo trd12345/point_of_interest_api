@@ -44,7 +44,6 @@ export const ReviewController = {
                 errors: null
             });
         } catch (e: any) {
-            console.error(e);
             let status = 500;
             if (e.message.includes("not found")) status = 404;
             if (e.message.includes("cannot review your own spot")) status = 403;
@@ -84,7 +83,6 @@ export const ReviewController = {
                 errors: null
             });
         } catch (e: any) {
-            console.error(e);
             let status = 500;
             if (e.message.includes("Review not found")) status = 404;
             if (e.message.includes("Unauthorized")) status = 403;
@@ -109,7 +107,6 @@ export const ReviewController = {
                 errors: null
             });
         } catch (e: any) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to fetch reviews",

@@ -22,7 +22,6 @@ export const AdminController = {
                 errors: null,
             });
         } catch (e: any) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to fetch users",
@@ -64,7 +63,6 @@ export const AdminController = {
                 errors: null,
             });
         } catch (e) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to delete user",
@@ -116,7 +114,6 @@ export const AdminController = {
                 errors: null,
             });
         } catch (e) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to update user role",

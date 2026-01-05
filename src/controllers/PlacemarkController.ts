@@ -30,7 +30,6 @@ export const PlacemarkController = {
                 errors: null,
             });
         } catch (e) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to fetch placemarks",
@@ -62,7 +61,6 @@ export const PlacemarkController = {
                 errors: null,
             });
         } catch (e) {
-            console.log(e);
             return res.status(404).json({
                 success: false,
                 message: "Placemark not found",

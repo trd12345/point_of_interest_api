@@ -9,7 +9,7 @@ export class PlacemarkService {
 
     // Get all placemarks including host and category details (Scrubbed for privacy)
     async getAll() {
-        return this.db.placemark.findMany({
+        const placemarks = await this.db.placemark.findMany({
             select: {
                 id: true,
                 name: true,
@@ -35,8 +35,36 @@ export class PlacemarkService {
                         }
                     }
                 },
-                category: true
+                category: true,
+                reviews: {
+                    where: {
+                        rating: { not: null }  // Only reviews with ratings
+                    },
+                    select: {
+                        rating: true
+                    }
+                }
             }
+        });
+
+        // Calculate average rating for each placemark
+        return placemarks.map(placemark => {
+            const ratings = placemark.reviews
+                .map(r => r.rating)
+                .filter((r): r is number => r !== null);
+
+            const average_rating = ratings.length > 0
+                ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length
+                : 0;
+
+            const review_count = ratings.length;
+
+            const { reviews, ...rest } = placemark;
+            return {
+                ...rest,
+                average_rating: Math.round(average_rating * 10) / 10, // Round to 1 decimal
+                review_count
+            };
         });
     }
 

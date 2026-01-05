@@ -40,7 +40,6 @@ export async function ForgotPasswordController(req: Request, res: Response) {
             });
         }
         // When error is not expected
-        console.log(error);
         return res.status(500).json({
             success: false,
             message: "Something went wrong",

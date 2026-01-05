@@ -16,6 +16,10 @@ export class ForgotPasswordService {
             throw new Error("USER_NOT_FOUND");
         }
 
+        if (user.oauth_provider === 'google') {
+            throw new Error("GOOGLE_ACCOUNT_ERROR");
+        }
+
         const token = passwordToken({
             userId: user.id,
             email: user.email

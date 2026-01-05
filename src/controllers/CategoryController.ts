@@ -21,7 +21,6 @@ export const CategoryController = {
                 errors: null,
             });
         } catch (e) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to fetch categories",
@@ -63,7 +62,6 @@ export const CategoryController = {
                 errors: null,
             });
         } catch (e) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to create category",
@@ -92,7 +90,6 @@ export const CategoryController = {
                 errors: null,
             });
         } catch (e) {
-            console.error(e);
             return res.status(500).json({
                 success: false,
                 message: "Failed to delete category",

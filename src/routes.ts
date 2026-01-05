@@ -14,6 +14,7 @@ import { PlacemarkController } from "./controllers/PlacemarkController";
 import { ChangePasswordController } from "./controllers/auth/ChangePasswordController";
 import { AdminController } from "./controllers/AdminController";
 import { ReviewController } from "./controllers/ReviewController";
+import { GoogleOAuthController } from "./controllers/GoogleOAuthController";
 import multer from "multer";
 
 const upload = multer();
@@ -23,6 +24,7 @@ const router = Router();
 router.post("/auth/login", AuthLimiter, LoginController);
 router.post("/auth/logout", AuthMiddleware, LogoutController);
 router.post("/auth/register", AuthLimiter, RegisterController);
+router.post("/auth/google", AuthLimiter, GoogleOAuthController.googleAuth);
 
 // User Profile Routes
 router.get("/auth/me", AuthMiddleware, MeController.get);

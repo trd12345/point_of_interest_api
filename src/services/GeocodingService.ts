@@ -29,7 +29,6 @@ export class GeocodingService {
             });
 
             if (!response.ok) {
-                console.error("Geocoding API failed:", response.statusText);
                 return null;
             }
 
@@ -44,7 +43,6 @@ export class GeocodingService {
 
             return null;
         } catch (error) {
-            console.error("Geocoding error:", error);
             return null;
         }
     }

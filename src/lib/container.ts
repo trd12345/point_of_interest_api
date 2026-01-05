@@ -13,6 +13,7 @@ import { GeocodingService } from "../services/GeocodingService";
 import { ImageService } from "../services/ImageService";
 import { AdminService } from "../services/AdminService";
 import { ReviewService } from "../services/ReviewService";
+import { GoogleOAuthService } from "../services/GoogleOAuthService";
 import { PrismaClient } from "../generated/prisma/client";
 
 
@@ -34,6 +35,7 @@ class Container {
     geocodingService = new GeocodingService();
     imageService = new ImageService();
     reviewService = new ReviewService(this.prisma);
+    googleOAuthService = new GoogleOAuthService(this.prisma);
 }
 
 export const container = new Container();
