@@ -58,46 +58,43 @@ export class PlacemarkService {
                         }
                     }
                 },
-                category: true
+                category: true,
+                reviews: {
+                    where: { parentId: null },
+                    include: {
+                        user: {
+                            include: { profile: true }
+                        },
+                        replies: {
+                            include: {
+                                user: {
+                                    include: { profile: true }
+                                }
+                            }
+                        }
+                    },
+                    orderBy: {
+                        created_at: "desc"
+                    }
+                }
             }
         });
 
         if (!placemark) return null;
 
+        // Only increment if viewer is not the owner
+        if (viewerId && viewerId !== placemark.userId) {
+            await this.db.placemark.update({
+                where: { id },
+                data: { view_count: { increment: 1 } }
+            });
+            placemark.view_count += 1; // Optmistic local update for the returned object
+        }
+
         // Scrub sensitive address if viewer is not the owner and not an admin
         if (viewerId !== placemark.userId && !isAdmin) {
             (placemark as any).street = "[HIDDEN]";
             (placemark as any).house_number = "";
-        }
-
-        // Only increment if viewer is not the owner
-        if (viewerId !== placemark.userId) {
-            placemark = await this.db.placemark.update({
-                where: { id },
-                data: { view_count: { increment: 1 } },
-                include: {
-                    user: {
-                        select: {
-                            id: true,
-                            profile: {
-                                select: {
-                                    first_name: true,
-                                    last_name: true,
-                                    contact_email: true,
-                                    contact_phone: true
-                                }
-                            }
-                        }
-                    },
-                    category: true
-                }
-            });
-
-            // Re-apply scrubbing after update
-            if (viewerId !== (placemark as any).userId && !isAdmin) {
-                (placemark as any).street = "[HIDDEN]";
-                (placemark as any).house_number = "";
-            }
         }
 
         return placemark;

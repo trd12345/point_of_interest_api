@@ -211,6 +211,7 @@ export type UserWhereInput = {
   PasswordReset?: Prisma.PasswordResetListRelationFilter
   Placemark?: Prisma.PlacemarkListRelationFilter
   Category?: Prisma.CategoryListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -227,6 +228,7 @@ export type UserOrderByWithRelationInput = {
   PasswordReset?: Prisma.PasswordResetOrderByRelationAggregateInput
   Placemark?: Prisma.PlacemarkOrderByRelationAggregateInput
   Category?: Prisma.CategoryOrderByRelationAggregateInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -246,6 +248,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   PasswordReset?: Prisma.PasswordResetListRelationFilter
   Placemark?: Prisma.PlacemarkListRelationFilter
   Category?: Prisma.CategoryListRelationFilter
+  reviews?: Prisma.ReviewListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -290,6 +293,7 @@ export type UserCreateInput = {
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -306,6 +310,7 @@ export type UserUncheckedCreateInput = {
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -321,6 +326,7 @@ export type UserUpdateInput = {
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -336,6 +342,7 @@ export type UserUncheckedUpdateInput = {
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -490,6 +497,20 @@ export type UserUpdateOneRequiredWithoutPlacemarkNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPlacemarkInput, Prisma.UserUpdateWithoutPlacemarkInput>, Prisma.UserUncheckedUpdateWithoutPlacemarkInput>
 }
 
+export type UserCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.UserUpsertWithoutReviewsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+}
+
 export type UserCreateWithoutProfileInput = {
   id?: string
   email: string
@@ -503,6 +524,7 @@ export type UserCreateWithoutProfileInput = {
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -518,6 +540,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -548,6 +571,7 @@ export type UserUpdateWithoutProfileInput = {
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -562,6 +586,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokenInput = {
@@ -577,6 +602,7 @@ export type UserCreateWithoutRefreshTokenInput = {
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokenInput = {
@@ -592,6 +618,7 @@ export type UserUncheckedCreateWithoutRefreshTokenInput = {
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokenInput = {
@@ -622,6 +649,7 @@ export type UserUpdateWithoutRefreshTokenInput = {
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokenInput = {
@@ -636,6 +664,7 @@ export type UserUncheckedUpdateWithoutRefreshTokenInput = {
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPasswordResetInput = {
@@ -651,6 +680,7 @@ export type UserCreateWithoutPasswordResetInput = {
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPasswordResetInput = {
@@ -666,6 +696,7 @@ export type UserUncheckedCreateWithoutPasswordResetInput = {
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPasswordResetInput = {
@@ -696,6 +727,7 @@ export type UserUpdateWithoutPasswordResetInput = {
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordResetInput = {
@@ -710,6 +742,7 @@ export type UserUncheckedUpdateWithoutPasswordResetInput = {
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoryInput = {
@@ -725,6 +758,7 @@ export type UserCreateWithoutCategoryInput = {
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoryInput = {
@@ -740,6 +774,7 @@ export type UserUncheckedCreateWithoutCategoryInput = {
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoryInput = {
@@ -770,6 +805,7 @@ export type UserUpdateWithoutCategoryInput = {
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoryInput = {
@@ -784,6 +820,7 @@ export type UserUncheckedUpdateWithoutCategoryInput = {
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlacemarkInput = {
@@ -799,6 +836,7 @@ export type UserCreateWithoutPlacemarkInput = {
   RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlacemarkInput = {
@@ -814,6 +852,7 @@ export type UserUncheckedCreateWithoutPlacemarkInput = {
   RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
   Category?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlacemarkInput = {
@@ -844,6 +883,7 @@ export type UserUpdateWithoutPlacemarkInput = {
   RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlacemarkInput = {
@@ -858,6 +898,85 @@ export type UserUncheckedUpdateWithoutPlacemarkInput = {
   RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
   Category?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutReviewsInput = {
+  id?: string
+  email: string
+  email_verified_at?: Date | string | null
+  password: string
+  role?: string
+  last_login?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  RefreshToken?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  PasswordReset?: Prisma.PasswordResetCreateNestedManyWithoutUserInput
+  Placemark?: Prisma.PlacemarkCreateNestedManyWithoutUserInput
+  Category?: Prisma.CategoryCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReviewsInput = {
+  id?: string
+  email: string
+  email_verified_at?: Date | string | null
+  password: string
+  role?: string
+  last_login?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  RefreshToken?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  PasswordReset?: Prisma.PasswordResetUncheckedCreateNestedManyWithoutUserInput
+  Placemark?: Prisma.PlacemarkUncheckedCreateNestedManyWithoutUserInput
+  Category?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+}
+
+export type UserUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>
+}
+
+export type UserUpdateWithoutReviewsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  RefreshToken?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  PasswordReset?: Prisma.PasswordResetUpdateManyWithoutUserNestedInput
+  Placemark?: Prisma.PlacemarkUpdateManyWithoutUserNestedInput
+  Category?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  email_verified_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  last_login?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  RefreshToken?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  PasswordReset?: Prisma.PasswordResetUncheckedUpdateManyWithoutUserNestedInput
+  Placemark?: Prisma.PlacemarkUncheckedUpdateManyWithoutUserNestedInput
+  Category?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -870,6 +989,7 @@ export type UserCountOutputType = {
   PasswordReset: number
   Placemark: number
   Category: number
+  reviews: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -877,6 +997,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   PasswordReset?: boolean | UserCountOutputTypeCountPasswordResetArgs
   Placemark?: boolean | UserCountOutputTypeCountPlacemarkArgs
   Category?: boolean | UserCountOutputTypeCountCategoryArgs
+  reviews?: boolean | UserCountOutputTypeCountReviewsArgs
 }
 
 /**
@@ -917,6 +1038,13 @@ export type UserCountOutputTypeCountCategoryArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.CategoryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -932,6 +1060,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   PasswordReset?: boolean | Prisma.User$PasswordResetArgs<ExtArgs>
   Placemark?: boolean | Prisma.User$PlacemarkArgs<ExtArgs>
   Category?: boolean | Prisma.User$CategoryArgs<ExtArgs>
+  reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -955,6 +1084,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   PasswordReset?: boolean | Prisma.User$PasswordResetArgs<ExtArgs>
   Placemark?: boolean | Prisma.User$PlacemarkArgs<ExtArgs>
   Category?: boolean | Prisma.User$CategoryArgs<ExtArgs>
+  reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -966,6 +1096,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     PasswordReset: Prisma.$PasswordResetPayload<ExtArgs>[]
     Placemark: Prisma.$PlacemarkPayload<ExtArgs>[]
     Category: Prisma.$CategoryPayload<ExtArgs>[]
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1344,6 +1475,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   PasswordReset<T extends Prisma.User$PasswordResetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$PasswordResetArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordResetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Placemark<T extends Prisma.User$PlacemarkArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$PlacemarkArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlacemarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Category<T extends Prisma.User$CategoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$CategoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1863,6 +1995,30 @@ export type User$CategoryArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
+}
+
+/**
+ * User.reviews
+ */
+export type User$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

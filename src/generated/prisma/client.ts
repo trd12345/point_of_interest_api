@@ -72,3 +72,8 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type Placemark = Prisma.PlacemarkModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel

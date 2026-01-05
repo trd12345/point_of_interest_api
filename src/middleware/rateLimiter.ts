@@ -2,7 +2,7 @@ import rateLimit from "express-rate-limit";
 
 export const AuthLimiter = rateLimit({
     windowMs: 60 * 1000,                 // 1 minute
-    limit: 10,                           // max 10 requests per minute
+    limit: 50,                           // max 50 requests per minute (increased for E2E tests)
     message: {
         success: false,
         message: "Too many attempts",

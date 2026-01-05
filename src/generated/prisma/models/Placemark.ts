@@ -326,6 +326,7 @@ export type PlacemarkWhereInput = {
   categoryId?: Prisma.StringFilter<"Placemark"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  reviews?: Prisma.ReviewListRelationFilter
 }
 
 export type PlacemarkOrderByWithRelationInput = {
@@ -348,6 +349,7 @@ export type PlacemarkOrderByWithRelationInput = {
   categoryId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
+  reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
 
 export type PlacemarkWhereUniqueInput = Prisma.AtLeast<{
@@ -373,6 +375,7 @@ export type PlacemarkWhereUniqueInput = Prisma.AtLeast<{
   categoryId?: Prisma.StringFilter<"Placemark"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  reviews?: Prisma.ReviewListRelationFilter
 }, "id">
 
 export type PlacemarkOrderByWithAggregationInput = {
@@ -441,6 +444,7 @@ export type PlacemarkCreateInput = {
   updated_at?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPlacemarkInput
   category: Prisma.CategoryCreateNestedOneWithoutPlacemarkInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutPlacemarkInput
 }
 
 export type PlacemarkUncheckedCreateInput = {
@@ -461,6 +465,7 @@ export type PlacemarkUncheckedCreateInput = {
   updated_at?: Date | string
   userId: string
   categoryId: string
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlacemarkInput
 }
 
 export type PlacemarkUpdateInput = {
@@ -480,6 +485,7 @@ export type PlacemarkUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPlacemarkNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutPlacemarkNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutPlacemarkNestedInput
 }
 
 export type PlacemarkUncheckedUpdateInput = {
@@ -499,6 +505,7 @@ export type PlacemarkUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlacemarkNestedInput
 }
 
 export type PlacemarkCreateManyInput = {
@@ -641,6 +648,11 @@ export type PlacemarkSumOrderByAggregateInput = {
   view_count?: Prisma.SortOrder
 }
 
+export type PlacemarkScalarRelationFilter = {
+  is?: Prisma.PlacemarkWhereInput
+  isNot?: Prisma.PlacemarkWhereInput
+}
+
 export type PlacemarkCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.PlacemarkCreateWithoutUserInput, Prisma.PlacemarkUncheckedCreateWithoutUserInput> | Prisma.PlacemarkCreateWithoutUserInput[] | Prisma.PlacemarkUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.PlacemarkCreateOrConnectWithoutUserInput | Prisma.PlacemarkCreateOrConnectWithoutUserInput[]
@@ -741,6 +753,20 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type PlacemarkCreateNestedOneWithoutReviewsInput = {
+  create?: Prisma.XOR<Prisma.PlacemarkCreateWithoutReviewsInput, Prisma.PlacemarkUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.PlacemarkCreateOrConnectWithoutReviewsInput
+  connect?: Prisma.PlacemarkWhereUniqueInput
+}
+
+export type PlacemarkUpdateOneRequiredWithoutReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.PlacemarkCreateWithoutReviewsInput, Prisma.PlacemarkUncheckedCreateWithoutReviewsInput>
+  connectOrCreate?: Prisma.PlacemarkCreateOrConnectWithoutReviewsInput
+  upsert?: Prisma.PlacemarkUpsertWithoutReviewsInput
+  connect?: Prisma.PlacemarkWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PlacemarkUpdateToOneWithWhereWithoutReviewsInput, Prisma.PlacemarkUpdateWithoutReviewsInput>, Prisma.PlacemarkUncheckedUpdateWithoutReviewsInput>
+}
+
 export type PlacemarkCreateWithoutUserInput = {
   id?: string
   name: string
@@ -758,6 +784,7 @@ export type PlacemarkCreateWithoutUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutPlacemarkInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutPlacemarkInput
 }
 
 export type PlacemarkUncheckedCreateWithoutUserInput = {
@@ -777,6 +804,7 @@ export type PlacemarkUncheckedCreateWithoutUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   categoryId: string
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlacemarkInput
 }
 
 export type PlacemarkCreateOrConnectWithoutUserInput = {
@@ -844,6 +872,7 @@ export type PlacemarkCreateWithoutCategoryInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPlacemarkInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutPlacemarkInput
 }
 
 export type PlacemarkUncheckedCreateWithoutCategoryInput = {
@@ -863,6 +892,7 @@ export type PlacemarkUncheckedCreateWithoutCategoryInput = {
   created_at?: Date | string
   updated_at?: Date | string
   userId: string
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlacemarkInput
 }
 
 export type PlacemarkCreateOrConnectWithoutCategoryInput = {
@@ -888,6 +918,100 @@ export type PlacemarkUpdateWithWhereUniqueWithoutCategoryInput = {
 export type PlacemarkUpdateManyWithWhereWithoutCategoryInput = {
   where: Prisma.PlacemarkScalarWhereInput
   data: Prisma.XOR<Prisma.PlacemarkUpdateManyMutationInput, Prisma.PlacemarkUncheckedUpdateManyWithoutCategoryInput>
+}
+
+export type PlacemarkCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  street: string
+  house_number?: string | null
+  zip: number
+  city: string
+  country: string
+  image_url?: string | null
+  lat: number
+  lng: number
+  view_count?: number
+  is_public?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutPlacemarkInput
+  category: Prisma.CategoryCreateNestedOneWithoutPlacemarkInput
+}
+
+export type PlacemarkUncheckedCreateWithoutReviewsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  street: string
+  house_number?: string | null
+  zip: number
+  city: string
+  country: string
+  image_url?: string | null
+  lat: number
+  lng: number
+  view_count?: number
+  is_public?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  userId: string
+  categoryId: string
+}
+
+export type PlacemarkCreateOrConnectWithoutReviewsInput = {
+  where: Prisma.PlacemarkWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlacemarkCreateWithoutReviewsInput, Prisma.PlacemarkUncheckedCreateWithoutReviewsInput>
+}
+
+export type PlacemarkUpsertWithoutReviewsInput = {
+  update: Prisma.XOR<Prisma.PlacemarkUpdateWithoutReviewsInput, Prisma.PlacemarkUncheckedUpdateWithoutReviewsInput>
+  create: Prisma.XOR<Prisma.PlacemarkCreateWithoutReviewsInput, Prisma.PlacemarkUncheckedCreateWithoutReviewsInput>
+  where?: Prisma.PlacemarkWhereInput
+}
+
+export type PlacemarkUpdateToOneWithWhereWithoutReviewsInput = {
+  where?: Prisma.PlacemarkWhereInput
+  data: Prisma.XOR<Prisma.PlacemarkUpdateWithoutReviewsInput, Prisma.PlacemarkUncheckedUpdateWithoutReviewsInput>
+}
+
+export type PlacemarkUpdateWithoutReviewsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip?: Prisma.IntFieldUpdateOperationsInput | number
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lat?: Prisma.FloatFieldUpdateOperationsInput | number
+  lng?: Prisma.FloatFieldUpdateOperationsInput | number
+  view_count?: Prisma.IntFieldUpdateOperationsInput | number
+  is_public?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutPlacemarkNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutPlacemarkNestedInput
+}
+
+export type PlacemarkUncheckedUpdateWithoutReviewsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.StringFieldUpdateOperationsInput | string
+  house_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  zip?: Prisma.IntFieldUpdateOperationsInput | number
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lat?: Prisma.FloatFieldUpdateOperationsInput | number
+  lng?: Prisma.FloatFieldUpdateOperationsInput | number
+  view_count?: Prisma.IntFieldUpdateOperationsInput | number
+  is_public?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type PlacemarkCreateManyUserInput = {
@@ -925,6 +1049,7 @@ export type PlacemarkUpdateWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutPlacemarkNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutPlacemarkNestedInput
 }
 
 export type PlacemarkUncheckedUpdateWithoutUserInput = {
@@ -943,6 +1068,7 @@ export type PlacemarkUncheckedUpdateWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlacemarkNestedInput
 }
 
 export type PlacemarkUncheckedUpdateManyWithoutUserInput = {
@@ -998,6 +1124,7 @@ export type PlacemarkUpdateWithoutCategoryInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPlacemarkNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutPlacemarkNestedInput
 }
 
 export type PlacemarkUncheckedUpdateWithoutCategoryInput = {
@@ -1016,6 +1143,7 @@ export type PlacemarkUncheckedUpdateWithoutCategoryInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlacemarkNestedInput
 }
 
 export type PlacemarkUncheckedUpdateManyWithoutCategoryInput = {
@@ -1036,6 +1164,35 @@ export type PlacemarkUncheckedUpdateManyWithoutCategoryInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+
+/**
+ * Count Type PlacemarkCountOutputType
+ */
+
+export type PlacemarkCountOutputType = {
+  reviews: number
+}
+
+export type PlacemarkCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  reviews?: boolean | PlacemarkCountOutputTypeCountReviewsArgs
+}
+
+/**
+ * PlacemarkCountOutputType without action
+ */
+export type PlacemarkCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlacemarkCountOutputType
+   */
+  select?: Prisma.PlacemarkCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PlacemarkCountOutputType without action
+ */
+export type PlacemarkCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
 
 
 export type PlacemarkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1058,6 +1215,8 @@ export type PlacemarkSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   categoryId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  reviews?: boolean | Prisma.Placemark$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.PlacemarkCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["placemark"]>
 
 
@@ -1086,6 +1245,8 @@ export type PlacemarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type PlacemarkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  reviews?: boolean | Prisma.Placemark$reviewsArgs<ExtArgs>
+  _count?: boolean | Prisma.PlacemarkCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $PlacemarkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1093,6 +1254,7 @@ export type $PlacemarkPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     category: Prisma.$CategoryPayload<ExtArgs>
+    reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1477,6 +1639,7 @@ export interface Prisma__PlacemarkClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  reviews<T extends Prisma.Placemark$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Placemark$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1890,6 +2053,30 @@ export type PlacemarkAggregateRawArgs<ExtArgs extends runtime.Types.Extensions.I
    * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
    */
   options?: runtime.InputJsonValue
+}
+
+/**
+ * Placemark.reviews
+ */
+export type Placemark$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
 }
 
 /**

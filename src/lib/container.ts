@@ -12,6 +12,7 @@ import { ChangePasswordService } from "../services/auth/ChangePasswordService";
 import { GeocodingService } from "../services/GeocodingService";
 import { ImageService } from "../services/ImageService";
 import { AdminService } from "../services/AdminService";
+import { ReviewService } from "../services/ReviewService";
 import { PrismaClient } from "../generated/prisma/client";
 
 
@@ -32,6 +33,7 @@ class Container {
     adminService = new AdminService(this.prisma);
     geocodingService = new GeocodingService();
     imageService = new ImageService();
+    reviewService = new ReviewService(this.prisma);
 }
 
 export const container = new Container();

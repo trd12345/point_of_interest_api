@@ -13,6 +13,7 @@ import { CategoryController } from "./controllers/CategoryController";
 import { PlacemarkController } from "./controllers/PlacemarkController";
 import { ChangePasswordController } from "./controllers/auth/ChangePasswordController";
 import { AdminController } from "./controllers/AdminController";
+import { ReviewController } from "./controllers/ReviewController";
 import multer from "multer";
 
 const upload = multer();
@@ -51,5 +52,10 @@ router.get("/placemarks/:id", OptionalAuthMiddleware, PlacemarkController.getOne
 // Protected: Only owner can update/delete
 router.put("/placemarks/:id", AuthMiddleware, upload.single("image"), PlacemarkController.update);
 router.delete("/placemarks/:id", AuthMiddleware, PlacemarkController.delete);
+
+// Review Routes
+router.get("/placemarks/:placemarkId/reviews", ReviewController.getByPlacemark);
+router.post("/reviews", AuthMiddleware, ReviewController.create);
+router.delete("/reviews/:id", AuthMiddleware, ReviewController.delete);
 
 export default router;

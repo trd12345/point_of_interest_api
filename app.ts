@@ -24,4 +24,5 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
     });
 });
 
-app.listen(3000);
+// app.listen(3000);
+export default app;

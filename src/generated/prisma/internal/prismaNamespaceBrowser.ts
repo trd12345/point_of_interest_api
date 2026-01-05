@@ -54,7 +54,8 @@ export const ModelName = {
   RefreshToken: 'RefreshToken',
   PasswordReset: 'PasswordReset',
   Category: 'Category',
-  Placemark: 'Placemark'
+  Placemark: 'Placemark',
+  Review: 'Review'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -147,6 +148,20 @@ export const PlacemarkScalarFieldEnum = {
 } as const
 
 export type PlacemarkScalarFieldEnum = (typeof PlacemarkScalarFieldEnum)[keyof typeof PlacemarkScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  comment: 'comment',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  userId: 'userId',
+  placemarkId: 'placemarkId',
+  parentId: 'parentId'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
 
 
 export const SortOrder = {
