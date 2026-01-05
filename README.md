@@ -21,6 +21,6 @@ npm test
 ```
 
 # Run Server
+```bash
 npm run dev
-
 ```
