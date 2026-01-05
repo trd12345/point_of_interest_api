@@ -18,6 +18,10 @@ export class ChangePasswordService {
         }
 
         // 1. Verify old password
+        if (!user.password) {
+            throw new Error("NO_PASSWORD_SET");
+        }
+
         const valid = await bcrypt.compare(data.old_password, user.password);
         if (!valid) {
             throw new Error("INVALID_PASSWORD");
