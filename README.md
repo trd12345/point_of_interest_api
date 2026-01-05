@@ -1,9 +1,8 @@
- # Node API
+# Node API
 
-## Running API
+## Setup & Configuration
 
 ```bash
-
 # Install dependencies
 npm install
 
@@ -14,7 +13,7 @@ cp .env.example .env
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ## Running Tests 
-## Expected Output is all tests to pass
+## Expected output: all tests pass.
 
 ```bash
 npm test
