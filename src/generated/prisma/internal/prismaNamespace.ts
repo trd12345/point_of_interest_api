@@ -894,6 +894,8 @@ export const ProfileScalarFieldEnum = {
   id: 'id',
   first_name: 'first_name',
   last_name: 'last_name',
+  contact_email: 'contact_email',
+  contact_phone: 'contact_phone',
   created_at: 'created_at',
   updated_at: 'updated_at',
   userId: 'userId'

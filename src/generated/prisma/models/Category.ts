@@ -389,11 +389,6 @@ export type CategoryUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-  unset?: boolean
-}
-
 export type CategoryCreateNestedOneWithoutPlacemarkInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutPlacemarkInput, Prisma.CategoryUncheckedCreateWithoutPlacemarkInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutPlacemarkInput
