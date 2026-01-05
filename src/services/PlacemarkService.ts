@@ -7,26 +7,23 @@ export class PlacemarkService {
     constructor(private db: PrismaClient) {
     }
 
-    // Get all placemarks including host and category details
+    // Get all placemarks including host and category details (Scrubbed for privacy)
     async getAll() {
         return this.db.placemark.findMany({
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        profile: true
-                    }
-                },
-                category: true
-            }
-        });
-    }
-
-    // Get a specific placemark by ID and optionally increment view count
-    async getById(id: string, viewerId?: string) {
-        const placemark = await this.db.placemark.findUnique({
-            where: { id },
-            include: {
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                city: true,
+                country: true,
+                image_url: true,
+                view_count: true,
+                categoryId: true,
+                is_public: true,
+                userId: true,
+                created_at: true,
+                updated_at: true,
+                // Exclude sensitive details: street, house_number, lat, lng, zip
                 user: {
                     select: {
                         id: true,
@@ -38,21 +35,44 @@ export class PlacemarkService {
                         }
                     }
                 },
-                category: {
+                category: true
+            }
+        });
+    }
+
+    // Get a specific placemark by ID and optionally increment view count
+    async getById(id: string, viewerId?: string, isAdmin: boolean = false) {
+        let placemark = await this.db.placemark.findUnique({
+            where: { id },
+            include: {
+                user: {
                     select: {
                         id: true,
-                        name: true,
-                        description: true
+                        profile: {
+                            select: {
+                                first_name: true,
+                                last_name: true,
+                                contact_email: true,
+                                contact_phone: true
+                            }
+                        }
                     }
-                }
+                },
+                category: true
             }
         });
 
         if (!placemark) return null;
 
+        // Scrub sensitive address if viewer is not the owner and not an admin
+        if (viewerId !== placemark.userId && !isAdmin) {
+            (placemark as any).street = "[HIDDEN]";
+            (placemark as any).house_number = "";
+        }
+
         // Only increment if viewer is not the owner
         if (viewerId !== placemark.userId) {
-            return await this.db.placemark.update({
+            placemark = await this.db.placemark.update({
                 where: { id },
                 data: { view_count: { increment: 1 } },
                 include: {
@@ -62,20 +82,22 @@ export class PlacemarkService {
                             profile: {
                                 select: {
                                     first_name: true,
-                                    last_name: true
+                                    last_name: true,
+                                    contact_email: true,
+                                    contact_phone: true
                                 }
                             }
                         }
                     },
-                    category: {
-                        select: {
-                            id: true,
-                            name: true,
-                            description: true
-                        }
-                    }
+                    category: true
                 }
             });
+
+            // Re-apply scrubbing after update
+            if (viewerId !== (placemark as any).userId && !isAdmin) {
+                (placemark as any).street = "[HIDDEN]";
+                (placemark as any).house_number = "";
+            }
         }
 
         return placemark;

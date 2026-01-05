@@ -44,7 +44,7 @@ export const PlacemarkController = {
     getOne: async (req: Request, res: Response) => {
         const user = (req as any).user;
         try {
-            const placemark = await container.placemarkService.getById(req.params.id, user?.id);
+            const placemark = await container.placemarkService.getById(req.params.id, user?.id, user?.role === "ADMIN");
             if (!placemark) {
                 return res.status(404).json({
                     success: false,

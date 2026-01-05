@@ -20,11 +20,13 @@ export class MeService {
         return user;
     }
 
-    async updateProfile(userId: string, data: { email: string; firstName: string; lastName: string }) {
+    async updateProfile(userId: string, data: { email: string; firstName: string; lastName: string; contactEmail?: string; contactPhone?: string }) {
         // Prepare update data
         const updateData: any = {
             first_name: data.firstName,
-            last_name: data.lastName
+            last_name: data.lastName,
+            contact_email: data.contactEmail || null,
+            contact_phone: data.contactPhone || null
         };
 
         const user = await this.getMe(userId);
