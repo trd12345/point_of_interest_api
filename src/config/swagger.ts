@@ -83,9 +83,11 @@ const options: swaggerJsdoc.Options = {
         ],
     },
     apis: [
-        path.join(__dirname, "../routes.ts"),
-        path.join(__dirname, "../controllers/**/*.ts")
-    ], // Paths to files containing annotations
+        "./src/routes.[tj]s",
+        "./src/controllers/**/*.[tj]s",
+        "./routes.[tj]s",
+        "./controllers/**/*.[tj]s"
+    ], // Support both TS (local) and JS (production/Vercel)
 };
 
 const swaggerSpec = swaggerJsdoc(options);
