@@ -1,5 +1,6 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import "dotenv/config";
+import path from "path";
 
 const options: swaggerJsdoc.Options = {
     definition: {
@@ -81,7 +82,10 @@ const options: swaggerJsdoc.Options = {
             },
         ],
     },
-    apis: ["./src/routes.ts", "./src/controllers/**/*.ts"], // Paths to files containing annotations
+    apis: [
+        path.join(__dirname, "../routes.ts"),
+        path.join(__dirname, "../controllers/**/*.ts")
+    ], // Paths to files containing annotations
 };
 
 const swaggerSpec = swaggerJsdoc(options);

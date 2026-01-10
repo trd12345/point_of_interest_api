@@ -15,7 +15,12 @@ app.use(cookieParser());
 //app.set('trust proxy', false);
 
 if (process.env.ENABLE_SWAGGER === "true") {
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    // Custom options for Swagger UI to work correctly on Vercel
+    const swaggerOptions = {
+        customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.css",
+        customSiteTitle: "POI API Documentation"
+    };
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
     console.log("Swagger documentation available at /api-docs");
 }
 
