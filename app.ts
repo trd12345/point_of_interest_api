@@ -18,9 +18,12 @@ if (process.env.ENABLE_SWAGGER === "true") {
     // Custom options for Swagger UI to work correctly on Vercel
     const swaggerOptions = {
         customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.css",
-        customJs: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-bundle.js",
+        customJs: [
+            "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-bundle.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui-standalone-preset.js"
+        ],
         customSiteTitle: "POI API Documentation"
-    };
+    } as any;
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
     console.log("Swagger documentation available at /api-docs");
 }
