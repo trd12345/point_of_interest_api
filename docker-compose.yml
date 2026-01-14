@@ -1,0 +1,66 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: poi-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - poi-mongodb-data:/data/db
+    networks:
+      - poi-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: poi-api
+    ports:
+      - "4000:3000"
+    environment:
+      - APP_URL=http://localhost:4000
+      - APP_ENV="production"
+      - DATABASE_URL=mongodb://mongodb:27017/point-of-interest?authSource=admin
+      - FRONTEND_URL=http://localhost:5173
+      - ENABLE_SWAGGER=true
+      - JWT_SECRET=super-secret-key-change-me-ASAP
+      - JWT_ACCESS_EXPIRES_IN=1h
+      - JWT_REFRESH_EXPIRES_IN=7d
+      - MAIL_HOST=smtp.example.com
+      - MAIL_PORT=587
+      - MAIL_FROM="API Demo <your-mail-username@your-mail-domain.com>"
+      - MAIL_USERNAME=your-mail-username
+      - MAIL_PASSWORD=your-mail-password
+      - CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
+      - CLOUDINARY_API_KEY=your-cloudinary-api-key
+      - CLOUDINARY_API_SECRET=your-cloudinary-api-secret
+    depends_on:
+      - mongodb
+    networks:
+      - poi-network
+
+  # Note: To run the frontend, you'll need to run docker-compose from the parent directory
+  # or use the -f flag. This file is placed here for convenience in the API workspace.
+  # Note: to create PUBLIC_GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET, follow the instructions at https://console.developers.google.com/apis/credentials/oauthclient
+  web:
+    build:
+      context: ../point_of_interest_front_end
+      dockerfile: Dockerfile
+    container_name: poi-web
+    ports:
+      - "5173:5173"
+    environment:
+      - PUBLIC_API_URL=http://localhost:5173
+      - PUBLIC_MAPTILER_KEY=your-maptiler-key
+      - PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
+      - GOOGLE_CLIENT_SECRET=your-google-client-secret
+    depends_on:
+      - api
+    networks:
+      - poi-network
+
+networks:
+  poi-network:
+    driver: bridge
+
+volumes:
+  poi-mongodb-data:
